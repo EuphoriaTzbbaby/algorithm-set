@@ -1,1 +1,9 @@
-
+# 基于 deque 来实现
+from collections import deque 
+q = deque()
+"""
+q.append(x) x 入队尾
+q.appendleft(x) x 入队头
+q.pop()  队尾出队
+q.popleft() 队头出队
+"""
