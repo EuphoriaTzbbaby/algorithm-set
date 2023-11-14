@@ -1,4 +1,5 @@
 # 基于 deque 来实现
+# 核心思想：无用数据及时去除
 from collections import deque 
 q = deque()
 """
