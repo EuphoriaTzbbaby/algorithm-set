@@ -1,4 +1,4 @@
-# 最多整数前缀，排序模拟即可
+# 最多正整数前缀，排序模拟即可
 class Solution:
     def maxScore(self, nums: List[int]) -> int:
         nums.sort(key = lambda x: -x)
