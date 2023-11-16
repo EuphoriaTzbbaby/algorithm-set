@@ -1,1 +1,18 @@
-
+"""
+试着求下 k = 1, 2, 3 ...
+找规律
+这很重要
+"""
+class Solution:
+    def putMarbles(self, weights: List[int], k: int) -> int:
+        res=[]
+        for i in range(len(weights)-1) :
+            res.append(weights[i]+weights[i+1])
+        res.sort()
+        mn,mx=0,0
+        for i in range(0,k-1) :
+            mn+=res[i]
+        n=len(res)
+        for i in range(n-k+1,n) :
+            mx+=res[i]
+        return mx-mn
