@@ -1,1 +1,4 @@
-
+# 天数很大, 再根据取余，推导公式
+class Solution:
+    def distinctIntegers(self, n: int) -> int:
+        return n-1 if n>1 else 1
