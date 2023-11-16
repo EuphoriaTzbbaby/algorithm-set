@@ -1,1 +1,13 @@
-
+# 逆向思维,求至少碰撞一次的次数,等价于全部情况减去都往一个方向跑的情况
+# 接着快速幂求解，注意有负数取余的写法
+class Solution:
+    def monkeyMove(self, n: int) -> int:
+        ans = 1
+        x = 2 
+        mod = 10 ** 9 + 7
+        while n:
+            if n & 1:
+                ans = (ans * x) % mod
+            x = (x * x) % mod 
+            n //= 2
+        return (ans - 2 + mod) % mod 
