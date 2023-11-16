@@ -1,1 +1,69 @@
-
+class Trie:
+    def __init__(self):
+        # 左 0 右 1
+        self.left = None
+        self.right = None
+    # 增添数 x 到树上
+    def add(self, x: int):
+        for k in range(31, -1, -1):
+            bit = (x >> k) & 1
+            if bit:
+                if not self.right: # 为空就创一个
+                     self.right = Trie()
+                self = self.right
+            else:
+                if not self.left: # 为空就创一个
+                    self.left = Trie()
+                self = self.left
+    # 数 x 与已添加数其中之一最大异或值
+    def find(self, x: int):
+        res = 0
+        for k in range(31, -1, -1):
+            bit = (x >> k) & 1
+            if bit: # 找 0
+                if not self.left:
+                    res = res * 2
+                    self = self.right
+                else:
+                    res = res * 2 + 1
+                    self = self.left
+            else: # 找 1
+                if not self.right:
+                    res = res * 2
+                    self = self.left
+                else:
+                    res = res * 2 + 1
+                    self = self.right
+        return res
+    # 从树中彻底删除数 x,第一步
+    def erase(self, x: int):
+        self = cur
+        for k in range(31, -1, -1):
+            bit = (x >> k) & 1
+            # 找到了先置空
+            if k == 0:
+                if bit:
+                     cur.right = None
+                else:
+                     cur.left = None
+                break
+            # 找到数 x 的最终位置
+            if bit:
+                 cur =  cur.right
+            else:
+                 cur =  cur.left
+        self = self.dfs(x, 31)
+    # 从树中彻底删除数 x,第二步,后序遍历
+def dfs(self, x: int, k: int):
+        bit = (x >> k) & 1
+        if self.left == None and self.right == None:
+            return None
+        if k == 0:
+            return self
+        if bit:
+            self.right = self.right.dfs(x, k - 1)
+        else:
+            self.left = self.left.dfs(x, k - 1)
+        # 左右儿子有一个不为空
+        if self.left or self.right:
+            return self
