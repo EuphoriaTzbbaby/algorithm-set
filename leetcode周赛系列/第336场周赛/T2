@@ -1,1 +1,13 @@
-
+# 最多整数前缀，排序模拟即可
+class Solution:
+    def maxScore(self, nums: List[int]) -> int:
+        nums.sort(key = lambda x: -x)
+        s = 0
+        i = 0
+        ans = 0
+        while i < len(nums) and s >= 0:
+            s += nums[i]
+            i += 1
+            if s > 0:
+                ans += 1
+        return ans
