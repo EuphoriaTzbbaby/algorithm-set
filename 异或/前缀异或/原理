@@ -1,1 +1,9 @@
-
+对于数组 nums = [x for x in range(10)]
+定于前缀异或数组 f
+f = [0] * (len(nums) + 1)
+for i in range(len(nums)):
+    f[i + 1] = f[i] ^ nums[i]
+现在可以方便的求  nums[left] ^ nums[left + 1] ^ ... nums[right - 1]
+因为 f[right] = 0 ^ nums[0] ^ nums[1] ^ ... nums[left - 1] ^ nums[left] ^... nums[right - 1]
+     f[left] = 0 ^ nums[0] ^ nums[1] ^ ... nums[left - 1]
+     nums[left] ^ nums[left + 1] ^ ... nums[right - 1] = f[left] ^ f[right]
