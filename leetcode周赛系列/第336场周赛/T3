@@ -1,1 +1,20 @@
-
+"""
+2 的次幂，想到二进制
+根据题意想到异或
+化简公式，好，两数之和，哈哈
+"""
+class Solution:
+    def beautifulSubarrays(self, nums: List[int]) -> int:
+        n = len(nums)
+        f = [0] * (n + 1)
+        for i in range(n):
+            f[i + 1] = f[i] ^ nums[i]
+        ans = 0
+        mp = defaultdict(int)
+        mp[0] = 1
+        for i in range(n):
+            if f[i + 1] in mp:
+                ans += mp[f[i + 1]]
+            mp[f[i + 1]] += 1
+        return ans
+        
