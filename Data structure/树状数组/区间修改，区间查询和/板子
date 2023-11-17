@@ -1,0 +1,67 @@
+import sys
+input = sys.stdin.readline
+def read_int():
+    s = input()
+    return int(s[:-1])
+def read_num():
+    s = input()
+    return map(int, s[:-1].split())
+def read_list():
+    s = input()
+    return list(map(int, s[:-1].split()))
+#
+class BIT:
+    def __init__(self, nn):
+        self.n = nn + 2
+        self.tree1 = [0] * self.n
+        self.tree2 = [0] * self.n
+    #单点修改
+    def update1(self, i: int, dis: int):
+        while i < self.n:
+            self.tree1[i] += dis
+            i += i & -i
+    def update2(self, i: int, dis: int):
+        while i < self.n:
+            self.tree2[i] += dis
+            i += i & -i
+    def query1(self, i: int):
+        res = 0
+        while i:
+            res += self.tree1[i]
+            i -= i & -i
+        return res
+    def query2(self, i: int):
+        res = 0
+        while i:
+            res += self.tree2[i]
+            i -= i & -i
+        return res
+n, m = read_num()
+f = read_list()
+nums = BIT(n)
+last = 0
+for i in range(n):
+    nums.update1(i + 1, f[i] - last)
+    nums.update2(i + 1, i * (f[i] - last))
+    last = f[i]
+for _ in range(m):
+    a = read_list()
+    if a[0] == 1:
+        x, y, d = a[1:]
+        nums.update1(x, d)
+        nums.update1(y + 1, -d)
+        nums.update2(x, d * (x - 1))
+        nums.update2(y + 1, -d * y)
+    else:
+        left, right = a[1:]
+        sumr = right * nums.query1(right) - nums.query2(right)
+        suml = (left - 1) * nums.query1(left - 1) - nums.query2(left - 1)
+        print(sumr - suml)
+
+"""
+a1 + a2 + a3 + ... + dk
+= d1 + (d1 + d2) + (d1 + d2 + d3) + ... + (d1 + d2 + d3 + ... + dk)
+= kd1 + (k - 1)d2 + (k - 2)d3 + ... + (k - (k - 1))dk
+= k(d1 + d2 + d3 + ... + dk) - (d2 + 2d3 + 3d4 + ... + (k - 1)dk)
+= k(d1 + d2 + d3 + ... + dk) - sum((i - 1)di for i in range(k + 1))
+"""
