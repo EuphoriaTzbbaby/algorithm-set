@@ -1,0 +1,27 @@
+indeg = [0] * n
+mp = defaultdict(list)
+for x, y in pre:
+    mp[y].append(x)
+    indeg[x] += 1
+vis = [False] * n
+ok = True
+def dfs(i: int):
+    nonlocal ok
+    vis[i] = True 
+    for x in mp[i]:
+        if vis[x]:
+            ok = False 
+            break
+        else:
+            indeg[x] -= 1
+    if ok:
+        ans.append(i)
+ans = []
+t = 0
+while t != n and ok:
+    for i in range(n):
+        if not vis[i] and indeg[i] == 0:
+            dfs(i)
+            break 
+    t += 1
+return ans if ok and len(ans) == n else []
