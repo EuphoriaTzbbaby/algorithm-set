@@ -1,1 +1,24 @@
+"""
+题目:
+给你一个 正 整数 n 。
 
+用 even 表示在 n 的二进制形式（下标从 0 开始）中值为 1 的偶数下标的个数。
+
+用 odd 表示在 n 的二进制形式（下标从 0 开始）中值为 1 的奇数下标的个数。
+
+返回整数数组 answer ，其中 answer = [even, odd] 。
+思路：把一个数进行二进制拆分，边拆边更新答案
+"""
+class Solution:
+    def evenOddBit(self, n: int) -> List[int]:
+        ok = 0
+        ans = [0] * 2
+        while n:
+            if n & 1:
+                if ok % 2:
+                    ans[1] += 1
+                else:
+                    ans[0] += 1
+            ok = (ok + 1) % 2
+            n //= 2
+        return ans
