@@ -1,0 +1,21 @@
+"""
+模拟走马步，判断核心在于横纵坐标是否都变化且横纵坐标变化绝对值之和是否为 3
+"""
+class Solution:
+    def checkValidGrid(self, grid: List[List[int]]) -> bool:
+        if grid[0][0] != 0:
+            return False 
+        t = 1
+        f = defaultdict(list)
+        for i, x in enumerate(grid):
+            for j, val in enumerate(x):
+                f[val] = [i, j]
+        n = len(grid)
+        stx, sty = 0, 0
+        while t != n * n:
+            x, y = f[t]
+            if abs(x - stx) + abs(y -sty) != 3 or x == stx or y == sty:
+                return False 
+            stx, sty = x, y 
+            t += 1
+        return True 
