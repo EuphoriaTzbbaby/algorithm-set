@@ -1,0 +1,30 @@
+"""
+最小环
+对于边权全为一的图求最短路，bfs 简单
+枚举边，bfs 求最短路
+"""
+class Solution:
+    def findShortestCycle(self, n: int, edges: List[List[int]]) -> int:
+        g = [[] for _ in range(n)]
+        for x, y in edges:
+            g[x].append(y)
+            g[y].append(x)
+        ans = inf
+        def bfs(s: int, t: int):
+            dis = [inf] * n 
+            dis[s] = 0
+            q = deque()
+            q.append(s)
+            while q:
+                x = q.popleft()
+                for y in g[x]:
+                    if x == s and y == t:
+                        continue 
+                    if dis[y] == inf:
+                        dis[y] = dis[x] + 1
+                        q.append(y)
+            return dis[t]
+        for s in range(n):
+            for t in g[s]:
+                ans = min(ans, bfs(s, t) + 1)
+        return ans if ans < inf else -1
