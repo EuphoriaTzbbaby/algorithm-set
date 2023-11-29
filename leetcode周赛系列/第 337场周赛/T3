@@ -1,0 +1,23 @@
+"""
+子集型回溯加哈希剪枝
+"""
+class Solution:
+    def beautifulSubsets(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        path = []
+        ans = 0
+        mp = [0] * 2009
+        def dfs(i: int):
+            if i < 0:
+                nonlocal ans
+                ans += 1
+                return
+            dfs(i - 1)
+            if mp[nums[i] + k] == 0:
+                path.append(nums[i])
+                mp[nums[i]] += 1
+                dfs(i - 1)
+                mp[nums[i]] -= 1
+                path.pop()
+        dfs(len(nums) - 1)
+        return ans - 1
