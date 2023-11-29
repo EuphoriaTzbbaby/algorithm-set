@@ -1,0 +1,13 @@
+"""
+对两个数组按升序排序，先哈希判断两个数组是否有交集，有就 return ans, 否则贪心构造答案
+"""
+class Solution:
+    def minNumber(self, nums1: List[int], nums2: List[int]) -> int:
+        s = set(nums1)
+        nums1.sort()
+        nums2.sort()
+        for x in nums2:
+            if x in s:
+                return x 
+        mx1, mx2 = nums1[0], nums2[0]
+        return min(mx1, mx2) * 10 + max(mx1, mx2)
