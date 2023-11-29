@@ -1,0 +1,19 @@
+"""
+转化成最大子数组模型
+"""
+class Solution:
+    def maximumCostSubstring(self, s: str, chars: str, vals: List[int]) -> int:
+        ans = 0
+        mp = defaultdict(int)
+        for i, c in enumerate(chars):
+            mp[c] = vals[i]
+        res = -inf
+        for i, c in enumerate(s):
+            val = ord(c) - 96 if c not in mp else mp[c]
+            if ans >= 0:
+                ans += val 
+            else:
+                ans = val
+            res = max(res, ans)
+        return max(res, 0)
+            
