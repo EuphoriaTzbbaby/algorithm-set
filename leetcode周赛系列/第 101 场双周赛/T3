@@ -1,0 +1,26 @@
+"""
+化简要求的式子，中位数贪心,难点循环数组的转变
+"""
+class Solution:
+    def makeSubKSumEqual(self, arr: List[int], k: int) -> int:
+        """
+        要求 b[0] = a[0] + a[1] + a[k - 1] 
+            b[1] =  a[1] + a[2] + a[3] + ... + a[k]
+            a[0] = a[0 + k] + a[0 + 2k]
+        """
+        def gcd(a: int, b: int):
+            return a if b == 0 else gcd(b, a % b)
+        n = len(arr)
+        k = gcd(n, k)
+        g = defaultdict(list)
+        for i, x in enumerate(arr):
+            g[i % k].append(x)
+        ans = 0
+        for f in g.values():
+            l = len(f) 
+            f.sort()
+            x = f[l // 2]
+            ans += sum(abs(val - x) for val in f)
+        return ans
+        
+        
