@@ -1,0 +1,12 @@
+"""
+反悔贪心，先全部选第一种，贪心的选对答案奉献最大的 n - k 个
+"""
+class Solution:
+    def miceAndCheese(self, reward1: List[int], reward2: List[int], k: int) -> int:
+        s = sum(reward1)
+        n = len(reward1)
+        f = [reward2[i] - reward1[i] for i in range(n)]
+        f.sort()
+        for i in range(n - 1, n - (n - k) - 1, -1):
+            s += f[i]
+        return s
