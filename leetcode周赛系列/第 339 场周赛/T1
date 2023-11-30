@@ -1,0 +1,23 @@
+"""
+  按题意模拟即可
+"""
+class Solution:
+    def findTheLongestBalancedSubstring(self, s: str) -> int:
+        ans = 0
+        n = len(s)
+        for i in range(n):
+            for j in range(i + 1, n):
+                l = j - i + 1
+                if l % 2:
+                    continue
+                ok = True 
+                for k in range(i, i + l // 2):
+                    if s[k] != '0':
+                        ok = False 
+                for k in range(i + l // 2, j + 1):
+                    if s[k] != '1':
+                        ok = False
+                print(i, j, l, ok, s[i: j + 1])
+                if ok:
+                    ans = max(ans, l)
+        return ans
