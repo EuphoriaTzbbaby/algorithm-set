@@ -1,0 +1,20 @@
+"""
+计数模拟
+"""
+class Solution:
+    def findMatrix(self, nums: List[int]) -> List[List[int]]:
+        mp = defaultdict(int)
+        for x in nums:
+            mp[x] += 1
+        ans = []
+        while True:
+            nums = []
+            for k in mp.keys():
+                x = mp[k] 
+                if x >= 1:
+                    mp[k] -= 1
+                    nums.append(k)
+            ans.append(nums)
+            if all(mp[k] == 0 for k in mp.keys()):
+                break
+        return ans
