@@ -1,0 +1,12 @@
+prime = []
+nums = [True] * 1000
+for i in range(2, 1000):
+    if nums[i]:
+        prime.append(i)
+    for j, x in enumerate(prime):
+        if i * x >= 1000:
+            break 
+        nums[i * x] = False 
+        if i % x == 0:
+            break
+        
