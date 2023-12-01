@@ -1,0 +1,20 @@
+"""
+分组，前缀和
+"""
+class Solution:
+    def distance(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        ans = [0] * n 
+        g = defaultdict(list)
+        for i, x in enumerate((nums)):
+            g[x].append(i)
+        for f in g.values():
+            l = len(f)
+            s = [0] * (l + 1)
+            for i in range(l):
+                s[i + 1] = s[i] + f[i] 
+            for i in range(l):
+                x = f[i]
+                ans[x] = x * (i + 1) - s[i + 1] + s[l] - s[i + 1] - (l - i - 1) * x
+        return ans
+        
