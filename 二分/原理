@@ -1,0 +1,7 @@
+设整数数组 nums 是非递减的，在区间 [l, r) 找第一个 >= x 的数，把区间分为[l, mid], [mid + 1, r)
+其中 mid = (l + r) // 2，如果 nums[mid] <= x，那么 我们要找的数在区间 [l, mid] 上，有 r = mid 
+否则 l = mid + 1
+找第一个大于等于 x 的下标可以用 bisect_left(nums, x)
+找第一个大于 x 的下标可以用 bisect_left(nums, x + 1)
+找最后一个小于等于 x 的下标可以用 bisect_left(nums, x + 1) - 1
+找最后一个小于 x 的下标可以用 bisect_left(nums, x) - 1
