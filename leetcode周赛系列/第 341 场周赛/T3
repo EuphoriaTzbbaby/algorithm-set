@@ -1,0 +1,11 @@
+"""
+这题分类讨论，讨论麻了
+"""
+class Solution:
+    def addMinimum(self, word: str) -> int:
+        res = 1
+        n = len(word)
+        for i in range(n):
+            if i + 1 < n and word[i] >= word[i + 1]:
+                res += 1
+        return res * 3 - n
