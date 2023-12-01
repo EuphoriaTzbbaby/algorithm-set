@@ -1,0 +1,19 @@
+"""
+同 T1
+"""
+
+class Solution:
+    def maxDivScore(self, nums: List[int], div: List[int]) -> int:
+        n = len(nums)
+        div.sort()
+        ans = div[0]
+        res = 0
+        for x in div:
+            cnt = 0
+            for i in range(n):
+                if nums[i] % x == 0:
+                    cnt += 1
+            if cnt > res:
+                res = cnt
+                ans = x 
+        return ans
