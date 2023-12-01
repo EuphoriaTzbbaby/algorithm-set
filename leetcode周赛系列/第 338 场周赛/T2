@@ -1,0 +1,28 @@
+"""
+预处理质数，欧拉筛，二分查找即可
+"""
+prime = []
+nums = [True] * 1000
+for i in range(2, 1000):
+    if nums[i]:
+        prime.append(i)
+    for j, x in enumerate(prime):
+        if i * x >= 1000:
+            break 
+        nums[i * x] = False 
+        if i % x == 0:
+            break
+class Solution:
+    def primeSubOperation(self, nums: List[int]) -> bool:
+        prime.insert(0, 0)
+        pre = 0
+        n = len(nums)
+        for i in range(n):
+            x = nums[i]
+            if x <= pre:
+                return False
+            id = bisect_left(prime, x - pre) - 1
+            x = x - prime[id]
+            pre = x
+        return True
+        
