@@ -1,0 +1,26 @@
+"""
+最小化最大值 
+"""
+class Solution:
+    def minimizeMax(self, nums: List[int], p: int) -> int:
+        nums.sort()
+        left, right = 0, nums[-1] - nums[0] + 1
+        ans = inf
+        n = len(nums)
+        while left < right:
+            dis = (left + right) // 2
+            cnt = 0
+            i = 0
+            while i < n:
+                if i + 1 < n and nums[i + 1] - nums[i] <= dis:
+                    cnt += 1
+                    i += 2
+                else:
+                    i += 1
+            if cnt >= p:
+                ans = dis 
+                right = dis
+            else:
+                left = dis + 1
+        return ans
+            
