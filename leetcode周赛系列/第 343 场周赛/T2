@@ -1,0 +1,19 @@
+"""
+预记录元素位置，模拟即可
+"""
+class Solution:
+    def firstCompleteIndex(self, arr: List[int], mat: List[List[int]]) -> int:
+        m, n = len(mat), len(mat[0])
+        row = [0] * m 
+        col = [0] * n 
+        mp = defaultdict(list)
+        for i, x in enumerate(mat):
+            for j, val in enumerate(x):
+                mp[val] = [i, j]
+        for i, x in enumerate(arr):
+            a, b = mp[x] 
+            row[a] += 1
+            col[b] += 1
+            if row[a] == n or col[b] == m:
+                return i
+        
