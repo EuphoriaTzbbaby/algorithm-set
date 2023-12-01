@@ -1,0 +1,23 @@
+# 朴素版
+def shortestPath(self, s: int, t: int) -> int:
+    if s == t:
+        return 0
+    dis = [inf] * self.n 
+    dis[s] = 0
+    vis = [False] * self.n
+    while True:
+        # 更新最短路
+        for f in self.g[s]:
+            y, w = f
+            if dis[s] + w < dis[y]:
+                dis[y] = dis[s] + w
+        vis[s] = True 
+        res = inf
+        for i in range(self.n):
+            if not vis[i] and dis[i] < res:
+                s = i 
+                res = dis[i]
+        if s == t:
+            return dis[s] 
+        if res == inf:
+            return -1
