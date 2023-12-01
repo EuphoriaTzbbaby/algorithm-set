@@ -1,0 +1,15 @@
+"""
+  选大的
+"""
+class Solution:
+  def kItemsWithMaximumSum(self, numOnes: int, numZeros: int, numNegOnes: int, k: int) -> int:
+      cnt1 = numOnes
+      cnt2 = numZeros
+      cnt3 = numNegOnes
+      if k <= cnt1:
+          return k 
+      elif cnt1 < k <= cnt1 + cnt2:
+          return cnt1
+      else:
+          return cnt1 - (k - cnt1 - cnt2)
+            
