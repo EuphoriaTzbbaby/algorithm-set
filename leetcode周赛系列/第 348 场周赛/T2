@@ -1,0 +1,10 @@
+"""
+简单模拟
+"""
+class Solution:
+    def semiOrderedPermutation(self, nums: List[int]) -> int:
+        n = len(nums)
+        id = nums.index(1)
+        ans = id
+        nums = [1] + nums[:id] + nums[id + 1:]
+        return ans + n - nums.index(n) - 1
