@@ -1,0 +1,24 @@
+"""
+哈哈，数位dp,无前导 0
+"""
+class Solution:
+    def count(self, num1: str, num2: str, min_sum: int, max_sum: int) -> int:
+        mod = 10 ** 9 + 7
+        def f(ss: str):
+            n = len(ss)
+            print(ss, n)
+            @cache
+            def dfs(i: int, s: int, limit: bool):
+                if s > max_sum:
+                    return 0
+                if i == n:
+                    return int(s >= min_sum)
+                up = int(ss[i]) if limit else 9
+                res = 0
+                for x in range(up + 1):
+                    res += dfs(i + 1, s + x, limit and x == up)
+                return res % mod 
+            return dfs(0, 0, True)
+        return (f(num2) - f(str(int(num1) - 1)) + mod) % mod
+        
+                
