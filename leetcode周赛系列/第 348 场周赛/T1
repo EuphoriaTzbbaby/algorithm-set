@@ -1,0 +1,6 @@
+"""
+  阅读理解题，求字母种类
+"""
+class Solution:
+    def minimizedStringLength(self, s: str) -> int:
+        return len(set(s))
