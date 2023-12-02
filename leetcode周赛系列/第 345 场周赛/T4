@@ -1,0 +1,31 @@
+"""
+判断连通分量，并查集，一个组之间两两之间有边，等价于，一个组边的数量为 l * (l - 1) // 2，其中 l 为组内边的个数
+"""
+class Solution:
+    def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        g = defaultdict(list)
+        cnt = defaultdict(int)
+        s = list(range(n))
+        def find(x: int):
+            if x != s[x]:
+                s[x] = find(s[x])
+            return s[x]
+        def merge(x: int, y: int):
+            rootx = find(x)
+            rooty = find(y)
+            if rootx != rooty:
+                s[rootx] = rooty
+        for x, y in edges:
+            merge(x, y)
+        for x, y in edges:
+            cnt[find(x)] += 1
+        for i in range(n):
+            g[find(i)].append(i)
+        ans = 0
+        for f in g.values():
+            print(f)
+            l = len(f)
+            if cnt[find(f[0])] == l * (l - 1) // 2:
+                ans += 1
+        return ans
+        
