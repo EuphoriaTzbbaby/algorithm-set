@@ -1,0 +1,19 @@
+class Solution:
+    def matrixSumQueries(self, n: int, queries: List[List[int]]) -> int:
+        row = set()
+        col = set()
+        ans = 0
+        for i in range(len(queries) - 1, -1, -1):
+            op, x, val = queries[i]
+            if op:
+                if x in col:
+                    continue
+                ans += (n - len(row)) * val
+                col.add(x)
+            else:
+                if x in row:
+                    continue
+                ans += (n - len(col)) * val
+                row.add(x)
+        return ans
+                
