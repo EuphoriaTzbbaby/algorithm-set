@@ -1,0 +1,25 @@
+"""
+考虑改变一个值的影响
+"""
+class Solution:
+    def colorTheArray(self, n: int, q: List[List[int]]) -> List[int]:
+        nums = [0] * n 
+        l = len(q)
+        cnt = 0
+        ans = [0] * l
+        for i in range(l):
+            id, x = q[i]
+            #改变一个，只会影响左右两侧的
+            #左边
+            if id - 1 >= 0 and nums[id] == nums[id - 1] and nums[id] != 0:
+                cnt -= 1
+            if id + 1 <= n - 1 and nums[id] == nums[id + 1] and nums[id] != 0:
+                cnt -= 1
+            nums[id] = x
+            if id - 1 >= 0 and nums[id] == nums[id - 1] and nums[id] != 0:
+                cnt += 1
+            if id + 1 <= n - 1 and nums[id] == nums[id + 1] and nums[id] != 0:
+                cnt += 1
+            ans[i] = cnt 
+        return ans
+            
