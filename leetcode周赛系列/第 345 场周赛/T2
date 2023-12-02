@@ -1,0 +1,9 @@
+"""
+麻了
+"""
+class Solution:
+    def doesValidArrayExist(self, derived: List[int]) -> bool:
+        x = 0
+        for s in derived:
+            x ^= s
+        return x == 0
