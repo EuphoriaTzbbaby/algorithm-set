@@ -1,0 +1,21 @@
+class Solution:
+    def maxNonDecreasingLength(self, nums1: List[int], nums2: List[int]) -> int:
+        nums = [[nums1[i], nums2[i]] for i in range(len(nums1))]
+        # 第 i 个位置选第 op 个数所构成的最长非递减子数组
+        @cache
+        def dfs(i: int, op: int):
+            if i == 0:
+                return 1
+            res = 1
+            # where
+            if nums1[i - 1] <= nums[i][op]:
+                res = max(res, dfs(i - 1, 0) + 1)
+            if nums2[i - 1] <= nums[i][op]:
+                res = max(res, dfs(i - 1, 1) + 1)
+            return res
+        ans = 1
+        for i in range(len(nums1) - 1, -1, -1):
+            for j in range(2):
+                # print(nums[i][j])
+                ans = max(ans, dfs(i, j))
+        return ans
