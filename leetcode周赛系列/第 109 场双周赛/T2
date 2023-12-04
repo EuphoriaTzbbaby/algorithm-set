@@ -1,0 +1,23 @@
+"""
+将元音字母单独排序再shai回去
+"""
+class Solution:
+    def sortVowels(self, s: str) -> str:
+        n = len(s)
+        vis = [True] * n
+        ans = []
+        for i, c in enumerate(s):
+            if c in 'aeiou' or c in 'AEIOU':
+                ans.append(c)
+            else:
+                vis[i] = False
+        ans.sort()
+        res = ""
+        t = 0
+        for i in range(n):
+            if not vis[i]:
+                res += s[i]
+            else:
+                res += ans[t]
+                t += 1
+        return res
