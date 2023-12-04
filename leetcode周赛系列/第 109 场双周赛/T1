@@ -1,0 +1,11 @@
+"""
+直接模拟
+"""
+class Solution:
+    def isGood(self, nums: List[int]) -> bool:
+        n = len(nums)
+        mp = defaultdict(int)
+        for x in nums:
+            mp[x] += 1
+        return all(mp[x] == 1 for x in range(1, n - 1)) and mp[n - 1] == 2
+            
