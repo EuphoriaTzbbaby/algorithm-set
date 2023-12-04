@@ -1,0 +1,14 @@
+from sortedcontainers import SortedList
+"""
+非递减
+st = SortedList()
+st.add(x)
+st.remove()
+st.pop()
+st.index(x)
+st.count(x)
+st.bisect_left(x)
+st[0]
+st[-1]
+"""
+
