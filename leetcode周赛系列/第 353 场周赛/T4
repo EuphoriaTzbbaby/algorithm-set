@@ -1,0 +1,26 @@
+"""
+边更新差分数组，边计算差分数组前缀和
+"""
+class Solution:
+    def checkArray(self, nums: List[int], k: int) -> bool:
+        n = len(nums)
+        diff = [0] * (n + 9)
+        s = 0
+        """
+        往后计算差分数组求前缀和 s 直到 x + s != 0
+        [0, 2] 减 2
+        往后计算差分数组求前缀和 s 直到 x + s != 0
+        [2, 4] 减 1
+        """
+        for i, x in enumerate(nums):
+            s += diff[i]
+            x += s
+            if x < 0:
+                return False
+            if x > 0:
+                s -= x
+                if i + k > n:
+                    return False
+                diff[i + k] += x
+        return True
+        
