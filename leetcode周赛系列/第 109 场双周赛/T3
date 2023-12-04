@@ -1,0 +1,16 @@
+"""
+简单 选或不选
+"""
+class Solution:
+    def maxScore(self, nums: List[int], x: int) -> int:
+        n = len(nums)
+        @cache
+        def dfs(i: int, last: int):
+            if i == n:
+                return 0
+            #不选
+            res = dfs(i + 1, last)
+            #选
+            res = max(res, dfs(i + 1, nums[i] % 2) + nums[i] + (0 if nums[i] % 2 == last else -x))
+            return res
+        return dfs(1, nums[0] % 2) + nums[0]
