@@ -1,0 +1,11 @@
+"""
+用 split()来模拟
+"""
+class Solution:
+  def splitWordsBySeparator(self, words: List[str], separator: str) -> List[str]:
+      ans = []
+      for s in words:
+          for ss in s.split(separator):
+              if ss != '':
+                  ans.append(ss)
+      return ans
