@@ -1,0 +1,21 @@
+"""
+众数模拟
+"""
+class Solution:
+    def minimumIndex(self, nums: List[int]) -> int:
+        mp = defaultdict(int)
+        for x in nums:
+            mp[x] += 1
+        x = 0
+        mx = 0
+        for k, val in mp.items():
+            if val > mx:
+                mx = val
+                x = k 
+        cnt = 0
+        for i, y in enumerate(nums):
+            if y == x:
+                cnt += 1
+            if cnt * 2 > (i + 1) and (mx - cnt) * 2 > len(nums) - i - 1:
+                return i
+        return -1
