@@ -1,0 +1,21 @@
+"""
+0/1 背包
+"""
+class Solution:
+    def numberOfWays(self, n: int, x: int) -> int:
+        mod = 10 ** 9 + 7
+        nums = []
+        i = 1
+        while True:
+            if i ** x > n:
+                break
+            nums.append(i)
+            i += 1
+        @cache
+        def dfs(i: int, c: int):
+            if i < 0:
+                return 1 if c == 0 else 0
+            if nums[i] ** x > c:
+                return dfs(i - 1, c) % mod
+            return (dfs(i - 1, c - nums[i] ** x) + dfs(i - 1, c)) % mod 
+        return dfs(len(nums) - 1, n)
