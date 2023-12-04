@@ -1,0 +1,21 @@
+"""
+模拟
+"""
+class Solution:
+    def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
+        ans = 0
+        n = len(nums)
+        for i in range(n):
+            for j in range(i, n):
+                if nums[i] % 2:
+                    continue
+                ok = True
+                for k in range(i, j):
+                    if nums[k] > threshold or nums[k] % 2 == nums[k + 1] % 2:
+                        ok = False 
+                        break 
+                if nums[j] > threshold:
+                    ok = False
+                if ok:
+                    ans = max(ans, j - i + 1)
+        return ans
