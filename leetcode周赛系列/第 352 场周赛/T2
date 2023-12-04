@@ -1,0 +1,25 @@
+"""
+预处理质数，模拟
+"""
+prime = []
+nums = [True] * (1000009)
+for i in range(2, 1000009):
+    if nums[i]:
+        prime.append(i)
+    for j, x in enumerate(prime):
+        if i * x >= 1000009:
+            break 
+        nums[i * x] = False 
+        if i % x == 0:
+            break 
+class Solution:
+    def findPrimePairs(self, n: int) -> List[List[int]]:
+        ans = []
+        vis = set(prime)
+        for x in prime:
+            if 2 * x > n:
+                break 
+            if n - x in vis:
+                ans.append([x, n - x])
+        return ans
+        
