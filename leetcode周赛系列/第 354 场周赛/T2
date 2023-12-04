@@ -1,0 +1,17 @@
+"""
+区间修改
+"""
+class Solution:
+    def maximumBeauty(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        mx = max(nums)
+        diff = [0] * (mx + k + 2)
+        for i, x in enumerate(nums):
+            diff[max(x - k, 0)] += 1
+            diff[min(x + k + 1, mx + k + 1)] -= 1
+        s = 0
+        ans = 0
+        for x in diff:
+            s += x 
+            ans = max(ans, s)
+        return ans
