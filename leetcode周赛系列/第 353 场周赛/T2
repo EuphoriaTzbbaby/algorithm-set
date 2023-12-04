@@ -1,0 +1,17 @@
+class Solution:
+    def maximumJumps(self, nums: List[int], target: int) -> int:
+        #-target <= nums[j] - nums[i] <= target
+        # nums[i] - target <= nums[j] <= nums[i] + target 
+        #从下标 i, 跳到 下标 0 的最大跳跃次数
+        @cache
+        def dfs(i: int):
+            if i == 0:
+                return 0
+            res = -inf
+            for j in range(i - 1, -1, -1):
+                if nums[i] - target <= nums[j] <= nums[i] + target:
+                    res = max(res, dfs(j) + 1)
+            return res
+        ans = dfs(len(nums) - 1)
+        return ans if ans > -inf else -1
+            
