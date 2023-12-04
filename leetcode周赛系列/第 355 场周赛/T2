@@ -1,0 +1,19 @@
+"""
+从后往前模拟
+"""
+class Solution:
+    def maxArrayValue(self, nums: List[int]) -> int:
+        n = len(nums)
+        ans = nums[0]
+        i = n - 2
+        while i >= 0:
+            if nums[i] <= nums[i + 1]:
+                nums[i] += nums[i + 1]
+            ans = max(ans, nums[i])
+            i -= 1
+        return ans
+            
+            
+            
+            
+            
