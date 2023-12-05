@@ -1,0 +1,11 @@
+"""
+写例子，找规律
+"""
+class Solution:
+    def accountBalanceAfterPurchase(self, purchaseAmount: int) -> int:
+        """
+        0 1 2 3 4   0
+        5 6 7 8 9 10 11 12 13 14 10
+        15                    24 20
+        """
+        return 100 - (purchaseAmount + 5) // 10 * 10
