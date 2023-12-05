@@ -1,0 +1,19 @@
+"""
+滑窗
+"""
+class Solution:
+    def longestEqualSubarray(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        left = 0
+        mp = [0] * (n + 1)
+        mx = 0
+        ans = 0
+        for right in range(n):
+            mp[nums[right]] += 1
+            mx = max(mx, mp[nums[right]])
+            while right - left + 1 > mx + k:
+                mp[nums[left]] -= 1
+                left += 1
+            ans = max(ans, mx)
+        return ans
+                
