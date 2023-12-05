@@ -1,0 +1,32 @@
+"""
+多数位加法
+"""
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        nums = []
+        p = head
+        while p:
+            nums.append(p.val)
+            p = p.next 
+        t = 0
+        for i in range(len(nums) - 1, -1, -1):
+            x = nums[i]
+            tt = x
+            nums[i] = (2 * x + t) % 10
+            t = (tt * 2 + t) // 10
+        ans = ListNode(-1)
+        p = ans
+        if t:
+            s = ListNode(1)
+            p.next = s
+            p = p.next 
+        for x in nums:
+            s = ListNode(x)
+            p.next = s
+            p = p.next 
+        return ans.next
