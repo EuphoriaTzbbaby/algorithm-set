@@ -1,0 +1,9 @@
+"""
+  往左往右绝对值之差 + 任意步
+"""
+class Solution:
+    def furthestDistanceFromOrigin(self, moves: str) -> int:
+        cnt1 = moves.count('L')
+        cnt2 = moves.count('R')
+        cnt3 = moves.count('_')
+        return abs(cnt1 - cnt2) + cnt3
