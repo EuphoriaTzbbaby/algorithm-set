@@ -1,0 +1,12 @@
+"""
+模拟即可
+"""
+class Solution:
+    def countPairs(self, nums: List[int], target: int) -> int:
+        n = len(nums)
+        ans = 0
+        for i, x in enumerate(nums):
+            for j in range(i + 1, n):
+                if x + nums[j] < target:
+                    ans += 1
+        return ans
