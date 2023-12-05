@@ -1,0 +1,17 @@
+class Solution:
+    def numberOfBeautifulIntegers(self, low: int, high: int, k: int) -> int:
+        def f(s: str):
+            @cache
+            def dfs(i: int, diff: int, num: int, limit: int, lead: int):
+                if i == len(s):
+                    return int(lead and diff == 0 and num == 0)
+                res = 0
+                if not lead:
+                    res = dfs(i + 1, diff, num, False, False)
+                low = 0 if lead else 1
+                up = int(s[i]) if limit else 9
+                for x in range(low, up + 1):
+                    res += dfs(i + 1, diff + (1 if x % 2 else -1), (num * 10 + x) % k, limit and x == up, True)
+                return res
+            return dfs(0, 0, 0, True, False)
+        return f(str(high)) - f(str(low - 1))
