@@ -1,0 +1,26 @@
+"""
+大数，就取余
+"""
+class Solution:
+    def minSizeSubarray(self, nums: List[int], target: int) -> int:
+        """
+        a1 a2 a3 a4 a1 a2 a3 a4 a1 a2 a3 a4
+        如果 target 很大
+        """
+        s = sum(nums)
+        t = target // s
+        target %= s
+        n = len(nums)
+        nums += nums
+        left = 0
+        ss = 0
+        ans = inf
+        for right in range(2 * n):
+            ss += nums[right]
+            while ss > target:
+                ss -= nums[left]
+                left += 1
+            if ss == target:
+                print(right, left)
+                ans = min(ans, right - left + 1)
+        return ans + n * t if ans < inf else -1
