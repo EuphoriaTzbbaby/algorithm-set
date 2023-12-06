@@ -1,0 +1,16 @@
+"""
+哈希模拟
+"""
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        ans = 0
+        cnt = 0
+        vis = set()
+        for i in range(len(nums) - 1, -1, -1):
+            x = nums[i]
+            if 1 <= x <= k and x not in vis:
+                vis.add(x)
+                cnt += 1
+            ans += 1
+            if cnt == k:
+                return ans
