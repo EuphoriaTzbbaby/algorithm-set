@@ -1,0 +1,19 @@
+"""
+怎么化简式子
+"""
+class Solution:
+    def countPairs(self, coordinates: List[List[int]], k: int) -> int:
+        """
+        x1 ^ x2 + y1 ^ y2 = k
+        x1 ^ x2 = i
+        x1 = i ^ x2
+        y1 = (k - i) ^ y1
+        """
+        mp = defaultdict(int)
+        ans = 0
+        for x, y in coordinates:
+            for i in range(k + 1):
+                ans += mp[i ^ x, (k - i) ^ y]
+            mp[x, y] += 1
+        return ans
+            
