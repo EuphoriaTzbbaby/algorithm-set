@@ -1,0 +1,51 @@
+"""
+前后缀数组 + 栈
+"""
+class Solution:
+    def maximumSumOfHeights(self, maxHeights: List[int]) -> int:
+        """
+        6 5 3 9 2 7 7
+        6 (5 3 3 2 2, 0)  21
+        5 (3 3 2 2, 5)    15
+        3 (3 2 2, 3 3)    10
+        9 (2 2, 3 3 3)    13
+        2 (2, 2 2 2 2)    4
+        7(0, 2 2 2 2 2)   7
+        7  -> 0
+        2  -> 2
+        9  -> 2 + 2
+        3  -> 
+        x > st[-1] 进
+        x <= st[-1] 退
+        """
+        n = len(maxHeights)
+        suf = [0] * (n)
+        s = 0
+        st = [n]
+        for i in range(n - 1, -1, -1):
+            # 出栈
+            while len(st) > 1 and maxHeights[i] <= maxHeights[st[-1]]:
+                s -= maxHeights[st[-1]] * (st[-2] - st[-1])
+                st.pop()
+            s += maxHeights[i] * (st[-1] - i)
+            st.append(i)
+            suf[i] = s
+        pre = [0] * n
+        st = [-1]
+        s = 0
+        """
+        [6,5,3,9,2,7]
+        6 10 9 18 10 17
+        """
+        for i in range(n):
+            while len(st) > 1 and maxHeights[i] <= maxHeights[st[-1]]:
+                s -= maxHeights[st[-1]] * (st[-1] - st[-2])
+                st.pop()
+            s += maxHeights[i] * (i - st[-1])
+            st.append(i)
+            pre[i] = s
+        ans = 0
+        for i, x in enumerate(maxHeights):
+            ans = max(ans, pre[i] + suf[i] - x)
+        return ans
+        
