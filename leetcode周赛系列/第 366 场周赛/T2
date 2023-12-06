@@ -1,0 +1,13 @@
+"""
+看样例贪心
+"""
+class Solution:
+    def minProcessingTime(self, proc: List[int], tasks: List[int]) -> int:
+        proc.sort()
+        tasks.sort(key = lambda x: -x)
+        ans = 0
+        for i in range(0, len(tasks), 4):
+            x = proc[i // 4]
+            ans = max(ans, x + tasks[i])
+        return ans
+        
