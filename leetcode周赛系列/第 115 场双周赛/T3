@@ -1,0 +1,41 @@
+"""
+思路同 T2
+"""
+class Solution:
+    def getWordsInLongestSubsequence(self, n: int, words: List[str], g: List[int]) -> List[str]:
+        f = [1] * n
+        for i in range(n):
+            for j in range(i):
+                if g[j] != g[i] and len(words[i]) == len(words[j]):
+                    cnt = 0
+                    for k in range(len(words[i])):
+                        if words[i][k] != words[j][k]:
+                            cnt += 1
+                    if cnt == 1:
+                        f[i] = max(f[i], f[j] + 1)
+        mx = max(f)
+        j = n - 1
+        while f[j] != mx:
+            j -= 1
+        ans = []
+        ans.append(words[j])
+        last_val = g[j]
+        last_len = len(words[j])
+        last = words[j]
+        t = mx - 1
+        def ff(s1, s2):
+            cnt = 0
+            l = len(s1)
+            for i in range(l):
+                if s1[i] != s2[i]:
+                    cnt += 1
+            return cnt
+        while t:
+            while j >= 0 and (f[j] != t or g[j] == last_val or len(words[j]) != last_len or ff(last, words[j]) != 1):
+                j -= 1
+            ans.append(words[j])
+            last_val = g[j]
+            last_len = len(words[j])
+            last = words[j]
+            t -= 1
+        return ans[::-1]
