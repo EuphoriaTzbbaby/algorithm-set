@@ -1,0 +1,19 @@
+"""
+取余只会越来越小
+"""
+class Solution:
+    def maxSubarrays(self, nums: List[int]) -> int:
+        s = nums[0]
+        for x in nums:
+            s &= x
+        if s != 0:
+            return 1
+        s = nums[0]
+        ans = 0
+        for i, x in enumerate(nums):
+            s &= x 
+            if s == 0:
+                ans += 1
+                if i + 1 < len(nums):
+                    s = nums[i + 1]
+        return ans
