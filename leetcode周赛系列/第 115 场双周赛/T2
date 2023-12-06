@@ -1,0 +1,26 @@
+"""
+最长递增子序列类型dp,输出一种方案
+"""
+class Solution:
+    def getWordsInLongestSubsequence(self, n: int, words: List[str], g: List[int]) -> List[str]:
+        f = [1] * n 
+        for i in range(n):
+            for j in range(i):
+                if g[j] != g[i]:
+                    f[i] = max(f[i], f[j] + 1)
+        mx = max(f)
+        j = n - 1
+        while f[j] != mx:
+            j -= 1
+        ans = []
+        ans.append(words[j])
+        last = g[j]
+        t = mx - 1
+        while t:
+            while j >= 0 and f[j] != t and g[j] == last:
+                j -= 1
+            ans.append(words[j])
+            last = g[j]
+            t -= 1
+        return ans[::-1]
+        
