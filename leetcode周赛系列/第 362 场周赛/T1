@@ -1,0 +1,16 @@
+"""
+可以合并区间来模拟
+"""
+class Solution:
+    def numberOfPoints(self, nums: List[List[int]]) -> int:
+        nums.sort()
+        res = []
+        for l, r in nums:
+            if not res or res[-1][1] < l:
+                res.append([l, r])
+            else:
+                res[-1][1] = max(res[-1][1], r)
+        s = 0
+        for l, r in res:
+            s += r - l + 1
+        return s
