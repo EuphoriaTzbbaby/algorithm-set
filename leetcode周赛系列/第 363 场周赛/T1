@@ -1,0 +1,16 @@
+"""
+模拟即可
+"""
+class Solution:
+    def sumIndicesWithKSetBits(self, nums: List[int], k: int) -> int:
+        s = 0
+        for i, x in enumerate(nums):
+            cnt = 0
+            t = i
+            while t:
+                if t & 1:
+                    cnt += 1
+                t //= 2
+            if cnt == k:
+                s += x 
+        return s
