@@ -1,0 +1,23 @@
+"""
+简单贪心
+"""
+class Solution:
+    def maxSpending(self, values: List[List[int]]) -> int:
+        m, n = len(values), len(values[0])
+        h = []
+        heapify(h)
+        for i in range(m):
+            heappush(h, [values[i][-1], i])
+        row = [n - 2] * m
+        s = 0
+        t = 1
+        while h:
+            x, id = heappop(h)
+            s += x * t
+            t += 1
+            if row[id] >= 0:
+                heappush(h, [values[id][row[id]], id])
+                row[id] -= 1
+        return s
+            
+            
