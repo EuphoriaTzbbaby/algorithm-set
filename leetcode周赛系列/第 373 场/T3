@@ -1,0 +1,29 @@
+"""
+先分组，再还原
+"""
+class Solution:
+    def lexicographicallySmallestArray(self, nums: List[int], limit: int) -> List[int]:
+        n = len(nums)
+        nums = list(zip(nums, range(n)))
+        nums.sort()
+        f = []
+        ans = [0] * n
+        for y in nums:
+            x, i = y
+            if not f or x - f[-1][0] <= limit:
+                f.append([x, i])
+            else:
+                ff = [x[1] for x in f]
+                ff.sort()
+                for j in range(len(f)):
+                    ans[ff[j]] = f[j][0]
+                f = []
+                f.append([x, i])
+        ff = [x[1] for x in f]
+        ff.sort()
+        for j in range(len(f)):
+            ans[ff[j]] = f[j][0]
+        return ans
+            
+            
+            
