@@ -54,16 +54,16 @@ class Trie:
                  cur =  cur.left
         self = self.dfs(x, 31)
     # 从树中彻底删除数 x,第二步,后序遍历
-def dfs(self, x: int, k: int):
-        bit = (x >> k) & 1
-        if self.left == None and self.right == None:
-            return None
-        if k == 0:
-            return self
-        if bit:
-            self.right = self.right.dfs(x, k - 1)
-        else:
-            self.left = self.left.dfs(x, k - 1)
-        # 左右儿子有一个不为空
-        if self.left or self.right:
-            return self
+    def dfs(self, x: int, k: int):
+            bit = (x >> k) & 1
+            if self.left == None and self.right == None:
+                return None
+            if k == 0:
+                return self
+            if bit:
+                self.right = self.right.dfs(x, k - 1)
+            else:
+                self.left = self.left.dfs(x, k - 1)
+            # 左右儿子有一个不为空
+            if self.left or self.right:
+                return self
