@@ -1,0 +1,10 @@
+"""
+模拟即可
+"""
+class Solution:
+    def findPeaks(self, moun: List[int]) -> List[int]:
+        ans = []
+        for i in range(1, len(moun) - 1):
+            if moun[i - 1] < moun[i] and moun[i] >  moun[i + 1]:
+                ans.append(i)
+        return ans
