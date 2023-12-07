@@ -1,0 +1,14 @@
+"""
+模拟即可
+"""
+class Solution:
+  def sumCounts(self, nums: List[int]) -> int:
+      ans = 0
+      mod = 10 ** 9 + 7
+      n = len(nums)
+      for i in range(n):
+          vis = set()
+          for j in range(i, n):
+              vis.add(nums[j])
+              ans += len(vis) * len(vis) % mod 
+      return ans
