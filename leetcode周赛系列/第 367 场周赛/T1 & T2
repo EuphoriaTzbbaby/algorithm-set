@@ -1,0 +1,25 @@
+"""
+有序数组
+"""
+from sortedcontainers import SortedList
+class Solution:
+    def findIndices(self, nums: List[int], index: int, value: int) -> List[int]:
+        st = SortedList()
+        n = len(nums)
+        mp = defaultdict(int)
+        for i in range(index, n):
+            st.add(nums[i])
+            mp[nums[i]] = i
+        for i in range(n):
+            if st:
+                if st[-1] - nums[i] >= value:
+                    return [i, mp[st[-1]]]
+                if nums[i] - st[0] >= value:
+                    return [i, mp[st[0]]]
+            if i + index < n:
+                st.remove(nums[i + index])
+            if n > i - index + 1 >= 0:
+                st.add(nums[i - index + 1])
+        return [-1, -1]
+            
+        
