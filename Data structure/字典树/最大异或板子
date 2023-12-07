@@ -37,7 +37,7 @@ class Trie:
         return res
     # 从树中彻底删除数 x,第一步
     def erase(self, x: int):
-        self = cur
+        cur = self
         for k in range(31, -1, -1):
             bit = (x >> k) & 1
             # 找到了先置空
