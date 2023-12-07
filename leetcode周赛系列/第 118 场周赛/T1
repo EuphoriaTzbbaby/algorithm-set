@@ -1,0 +1,10 @@
+"""
+简单模拟
+"""
+class Solution:
+    def findWordsContaining(self, words: List[str], x: str) -> List[int]:
+        ans = []
+        for i, s in enumerate(words):
+            if x in s:
+                ans.append(i)
+        return ans
