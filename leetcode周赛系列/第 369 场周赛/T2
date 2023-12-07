@@ -1,0 +1,16 @@
+"""
+分类讨论
+"""
+class Solution:
+    def minSum(self, nums1: List[int], nums2: List[int]) -> int:
+        s1 = sum(nums1)
+        s2 = sum(nums2)
+        cnt1 = nums1.count(0)
+        cnt2 = nums2.count(0)
+        if cnt1 == cnt2 and cnt1 == 0:
+            return s1 if s1 == s2 else -1
+        if cnt1 != 0 and cnt2 == 0:
+            return -1 if s1 + cnt1 > s2 else s2
+        if cnt2 != 0 and cnt1 == 0:
+            return -1 if s2 + cnt2 > s1 else s1
+        return max(s1 + cnt1, s2 + cnt2)
