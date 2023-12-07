@@ -1,0 +1,15 @@
+"""
+简单dp
+"""
+class Solution:
+    def minimumCoins(self, p: List[int]) -> int:
+        @cache
+        def dfs(i: int, last):
+            if i == len(p):
+                return 0
+            # 必须买
+            if last == 0:
+                return dfs(i + 1, i + 1) + p[i]
+            return min(dfs(i + 1, i + 1) + p[i], dfs(i + 1, last - 1))
+        return dfs(1, 1) + p[0]
+            
