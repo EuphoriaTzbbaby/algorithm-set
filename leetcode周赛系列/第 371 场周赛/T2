@@ -1,0 +1,23 @@
+"""
+模拟即可
+"""
+class Solution:
+    def findHighAccessEmployees(self, access_times: List[List[str]]) -> List[str]:
+        g = defaultdict(list)
+        for x, val in access_times:
+            g[x].append(val)
+        ans = []
+        for name, f in g.items():
+            ok = False
+            l = len(f)
+            f.sort()
+            i = 0
+            while i < l:
+                if i + 2 < l and (int(f[i + 2][:2]) - int(f[i][:2])) * 60 + int(f[i + 2][2:]) - int(f[i][2:]) < 60:
+                    ok = True
+                    break 
+                else:
+                    i += 1
+            if ok:
+                ans.append(name)
+        return ans
