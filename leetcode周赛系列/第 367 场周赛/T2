@@ -1,0 +1,24 @@
+"""
+模拟即可
+"""
+class Solution:
+    def shortestBeautifulSubstring(self, s: str, k: int) -> str:
+        n = len(s)
+        res = []
+        mn = inf
+        for i in range(n):
+            for j in range(i, n):
+                cnt = s[i: j + 1].count('1')
+                if cnt == k:
+                    mn = min(mn, j - i + 1)
+                    res.append(s[i: j + 1])
+        if not res:
+            return ""
+        ans = []
+        for s in res:
+            if len(s) == mn:
+                ans.append(s)
+        ans.sort()
+        return ans[0]
+        
+            
