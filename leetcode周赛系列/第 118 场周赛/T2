@@ -1,0 +1,24 @@
+"""
+结论题
+"""
+class Solution:
+    def maximizeSquareHoleArea(self, n: int, m: int, h: List[int], v: List[int]) -> int:
+        mx1 = 0
+        mx2 = 0
+        res = 1
+        h.sort()
+        v.sort()
+        for i, x in enumerate(h):
+            if i > 0 and h[i] == h[i - 1] + 1:
+                res += 1
+            else:
+                res = 1
+            mx1 = max(mx1, res)
+        res = 1
+        for i, x in enumerate(v):
+            if i > 0 and v[i] == v[i - 1] + 1:
+                res += 1
+            else:
+                res = 1
+            mx2 = max(mx2, res)
+        return min(mx1 + 1, mx2 + 1) ** 2
