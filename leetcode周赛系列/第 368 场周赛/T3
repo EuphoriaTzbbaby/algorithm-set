@@ -1,0 +1,23 @@
+"""
+分组
+"""
+class Solution:
+    def minGroupsForValidAssignment(self, nums: List[int]) -> int:
+        n = len(nums)
+        mp = defaultdict(int)
+        for x in nums:
+            mp[x] += 1
+        mn = min(mp.values())
+        ans = inf
+        for v in range(mn, 0, -1):
+            # 每个数字最少分成几组
+            cnt = 0
+            ok = True
+            for x in mp.values():
+                mod, r = x % v, x // v
+                if mod > r:
+                    ok = False
+                    break 
+                cnt += (x + v) // (v + 1)
+            if ok:
+                return cnt
