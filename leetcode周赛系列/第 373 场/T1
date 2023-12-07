@@ -1,0 +1,15 @@
+"""
+模拟即可
+"""
+class Solution:
+    def areSimilar(self, nums: List[List[int]], k: int) -> bool:
+        m = len(nums)
+        n = len(nums[0])
+        ans = []
+        for i in range(m):
+            k %= n
+            if i % 2 == 0:
+                ans.append(nums[i][n - k:] + nums[i][:n - k])
+            else:
+                ans.append(nums[i][k:] + nums[i][:k])
+        return ans == nums
