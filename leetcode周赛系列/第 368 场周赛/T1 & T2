@@ -1,0 +1,23 @@
+"""
+前后缀分解
+"""
+class Solution:
+    def minimumSum(self, nums: List[int]) -> int:
+        n = len(nums)
+        pre = [inf] * n
+        mn = inf
+        for i in range(n):
+            if mn < nums[i]:
+                pre[i] = mn 
+            mn = min(mn, nums[i])
+        suf = [inf] * n
+        mn = inf
+        for i in range(n - 1, -1, -1):
+            if mn < nums[i]:
+                suf[i] = mn
+            mn = min(mn, nums[i])
+        s = inf
+        for i in range(n):
+            cur = pre[i] + suf[i] + nums[i]
+            s = min(cur, s)
+        return s if s < inf else -1
