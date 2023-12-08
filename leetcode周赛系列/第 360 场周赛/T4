@@ -1,0 +1,23 @@
+"""
+倍增板子维护祖先时额外维护节点值
+"""
+class Solution:
+    def getMaxFunctionValue(self, receiver: List[int], k: int) -> int:
+        n = len(receiver)
+        m = k.bit_length()
+        pa = [[(p, p)] + [(-1, 0)] * (m - 1) for p in receiver]
+        for i in range(m - 1):
+            for x in range(n):
+                p, s = pa[x][i]
+                pp, ss = pa[p][i]
+                pa[x][i + 1] = (pp, s + ss)
+        ans = 0
+        for j in range(n):
+            s = 0
+            node = j
+            for i in range(m):
+                if (k >> i) & 1:
+                    node, x = pa[node][i]
+                    s += x
+            ans = max(ans, s + j)
+        return ans
