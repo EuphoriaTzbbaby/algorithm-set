@@ -1,0 +1,23 @@
+"""
+匹配， 简单做法全排列
+"""
+class Solution:
+    def minimumMoves(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        tin = []
+        to = []
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] > 1:
+                    to.extend([(i, j)] * (grid[i][j] - 1))
+                elif grid[i][j] == 0:
+                    tin.append((i, j))
+        ans = inf
+        for f in permutations(tin):
+            s = 0
+            for i in range(len(f)):
+                s += abs(f[i][0] - to[i][0]) + abs(f[i][1] - to[i][1])
+            ans = min(ans, s)
+        return ans
+                
+                    
