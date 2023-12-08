@@ -1,0 +1,16 @@
+class Solution:
+    def countKSubsequencesWithMaxBeauty(self, s: str, k: int) -> int:
+        f = defaultdict(int)
+        for c in s:
+            f[c] += 1
+        freq = defaultdict(int) 
+        for x in f.values():
+            freq[x] += 1
+        ans = 1
+        mod = 10 ** 9 + 7
+        for x, cnt in sorted(freq.items(), reverse = True):
+            if cnt >= k:
+                return (ans * comb(cnt, k) * int(pow(x, k, mod))) % mod 
+            ans = (ans * int(pow(x, cnt, mod))) % mod 
+            k -= cnt 
+        return 0
