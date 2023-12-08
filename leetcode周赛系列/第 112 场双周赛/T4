@@ -1,3 +1,8 @@
+"""
+计 f : f(c) freq : f(f(c))
+x, cnt in freq
+依次用 x 较大的 
+"""
 class Solution:
     def countKSubsequencesWithMaxBeauty(self, s: str, k: int) -> int:
         f = defaultdict(int)
