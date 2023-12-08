@@ -1,0 +1,14 @@
+"""
+考虑前 i 个房屋可得到的最大利润
+class Solution:
+    def maximizeTheProfit(self, n: int, offers: List[List[int]]) -> int:
+        mp = defaultdict(list)
+        for st, ed, tip in offers:
+            mp[ed].append([st, tip])
+        f = [0] * (n + 1)
+        for i in range(n):
+            f[i + 1] = f[i]
+            if i in mp:
+                f[i + 1] = max(f[i + 1], max(f[st] + t for st, t in mp[i]))
+        return f[n]
+                
