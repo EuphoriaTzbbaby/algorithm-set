@@ -1,0 +1,11 @@
+"""
+直接模拟
+"""
+class Solution:
+    def countTestedDevices(self, b: List[int]) -> int:
+        n = len(b)
+        ans = 0
+        for i, x in enumerate(b):
+            if x - ans > 0:
+                ans += 1
+        return ans
