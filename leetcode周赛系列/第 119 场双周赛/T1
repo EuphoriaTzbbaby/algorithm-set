@@ -1,0 +1,15 @@
+"""
+哈希模拟
+"""
+class Solution:
+    def findIntersectionValues(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        vis = set(nums1)
+        ans = [0, 0]
+        for x in nums2:
+            if x in vis:
+                ans[1] += 1
+        vis = set(nums2)
+        for x in nums1:
+            if x in vis:
+                ans[0] += 1
+        return ans
