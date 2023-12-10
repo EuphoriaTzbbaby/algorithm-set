@@ -1,0 +1,23 @@
+"""
+相当于区间跳跃
+"""
+class Solution:
+    def numberOfGoodPartitions(self, nums: List[int]) -> int:
+        mod = 10 ** 9 + 7
+        n = len(nums)
+        g = defaultdict(int)
+        for i, x in enumerate(nums):
+            g[x] = i
+        i = 0
+        cnt = 0
+        while i < n:
+            cnt += 1
+            mx = g[nums[i]]
+            j = i + 1
+            while j < mx:
+                mx = max(mx, g[nums[j]])
+                j += 1
+            i = mx + 1
+        return int(pow(2, cnt - 1, mod))
+                    
+                
