@@ -1,0 +1,13 @@
+"""
+直接模拟
+"""
+class Solution:
+    def getGoodIndices(self, v: List[List[int]], target: int) -> List[int]:
+        ans = []
+        for i, f in enumerate(v):
+            a, b, c, m = f
+            if pow(pow(a, b, 10), c, m) == target:
+                ans.append(i)
+        return ans
+                    
+        
