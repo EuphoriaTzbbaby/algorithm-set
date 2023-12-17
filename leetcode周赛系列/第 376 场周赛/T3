@@ -1,0 +1,24 @@
+"""
+中位数贪心，判断回文
+"""
+class Solution:
+    def minimumCost(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        res = nums[n // 2]
+        ans = [0, 0]
+        for i in range(res, 0, -1):
+            s = str(i)
+            if s == s[::-1]:
+                ans[0] = i 
+                break 
+        for i in range(res, 10 ** 9):
+            s = str(i)
+            if s == s[::-1]:
+                ans[1] = i 
+                break 
+        s1, s2 = 0, 0
+        for x in nums:
+            s1 += abs(x - ans[0])
+            s2 += abs(x - ans[1])
+        return s1  if s1 <= s2 else s2
