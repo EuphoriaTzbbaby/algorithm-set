@@ -1,0 +1,22 @@
+"""
+单调性 -> 滑窗 ？ 二分
+"""
+class Solution:
+    def maxFrequencyScore(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        s = list(accumulate(nums, initial = 0))
+        ans = left = 0
+        n = len(nums)
+        def dis(left: int, right: int):
+            i = (left + right) // 2
+            # [l...i]
+            l = (i - left + 1) * nums[i] - (s[i + 1] - s[left])
+            # [i + 1....r]
+            r = s[right + 1] - s[i + 1] - (right - i) * nums[i]
+            return l + r
+        for right in range(n):
+            while dis(left, right) > k:
+                left += 1
+            ans = max(ans, right - left + 1)
+        return ans
+                
