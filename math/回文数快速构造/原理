@@ -1,0 +1,27 @@
+构造小于等于 pow(10, g * 2 - 1) - 1 全部回文数
+nums = []
+t = 1
+i = 1
+while t < g:
+    i = pow(10, t - 1)
+    while i < pow(10, t):
+        a = i
+        b = i // 10
+        while b:
+            a *= 10
+            a += b % 10
+            b //= 10
+        nums.append(a)
+        i += 1
+   i = pow(10, t - 1)
+   if i < pow(10, t - 2):
+      while i < pow(10, t):
+          a = i
+          b = i
+          while b:
+              a *= 10
+              a += b % 10
+              b //= 10
+          nums.append(a)
+          i += 1
+    t += 1
