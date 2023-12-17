@@ -1,0 +1,17 @@
+"""
+也是模拟
+"""
+class Solution:
+    def divideArray(self, nums: List[int], k: int) -> List[List[int]]:
+        nums.sort()
+        ans = []
+        n = len(nums)
+        for i in range(0, n, 3):
+            ans.append(nums[i: i + 3])
+        ok = True
+        for f in ans:
+            if f[2] - f[0] > k:
+                ok = False
+        if ok:
+            return ans
+        return []
