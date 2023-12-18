@@ -1,0 +1,26 @@
+"""
+分析操作的本质吧
+选择两个下标 i 和 j ，将 s1[i] 和 s1[j] 都反转，操作的代价为 x 。
+选择满足 i < n - 1 的下标 i ，反转 s1[i] 和 s1[i + 1] ，操作的代价为 1 。
+① 操作一， 消耗 x / 2 去掉一位
+  操作二，消耗 p[i] - p[i - 1] 去掉两位
+② j 在哪里呢， 不知道，可以记录下来
+  此时操作一 可以免不免费了
+"""
+class Solution:
+    def minOperations(self, s1: str, s2: str, x: int) -> int:
+        p = []
+        for i in range(len(s1)):
+            if s1[i] != s2[i]:
+                p.append(i) 
+        n = len(p) 
+        if n % 2:
+            return -1 
+        @cache 
+        def dfs(i: int):
+            if i < 0:
+                return 0
+            res1 = dfs(i - 1) + x 
+            res2 = dfs(i - 2) + (p[i] - p[i - 1]) * 2 if i > 0 else inf 
+            return min(res1, res2) 
+        return dfs(n - 1) // 2
