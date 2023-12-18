@@ -1,0 +1,35 @@
+class segtree:
+    def __init__(self, l: int, r: int):
+        self.l, self.r = l, r 
+        self.ls, self.rs = None, None 
+        self. mid = (self.l + self. r) // 2
+        self.mx = -inf
+    def push_up(self):
+        if self.ls:
+            self.mx = max(self.mx, self.ls.mx)
+        if self.rs:
+            self.mx = max(self.mx, self.rs.mx)
+    def update(self, id: int, val: int):
+        if self.l == self.r:
+            self.mx = max(self.mx, val) 
+            return 
+        if id <= self.mid:
+            if not self.ls:
+                self.ls = segtree(self.l, self.mid)
+            self.ls.update(id, val) 
+        else:
+            if not self.rs:
+                self.rs = segtree(self.mid + 1, self.r) 
+            self.rs.update(id, val) 
+        self.push_up() 
+    def query(self, l: int, r: int):
+        if l <= self.l and self.r <= r:
+            return self.mx 
+        res = -inf
+        if l <= self.mid:
+            if self.ls:
+                res = self.ls.query(l, r) 
+        if self.mid + 1 <= r:
+            if self.rs:
+                res = max(res, self.rs.query(l, r))
+        return res
