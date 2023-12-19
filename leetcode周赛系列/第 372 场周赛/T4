@@ -1,0 +1,48 @@
+"""
+在区间[i, n - 1] 找 h[i] >= x 的最小下标
+线段树二分你值得拥有
+"""
+class segtree:
+    def __init__(self, a):
+        self.nums = a
+        self.n = len(a)
+        self.tree = [-inf] * (4 * self.n + 1)
+    def push_up(self, p: int):
+        self.tree[p] = max(self.tree[p + p], self.tree[p + p + 1])
+    def build_tree(self, p: int, pl: int, pr: int):
+        if pl == pr:
+            self.tree[p] = self.nums[pl - 1]
+            return
+        mid = (pl + pr) >> 1
+        self.build_tree(p + p, pl, mid)
+        self.build_tree(p + p + 1, mid + 1, pr)
+        self.push_up(p)
+    def query(self,p: int, pl: int, pr: int, id: int, x: int):
+        if self.tree[p] <= x:
+            return -inf
+        if pl == pr:
+            return pl 
+        mid = (pl + pr) // 2 
+        if id <= mid:
+            i = self.query(p + p, pl, mid, id, x)
+            if i > 0:
+                return i  
+        return self.query(p + p + 1, mid + 1, pr, id, x)
+class Solution:
+    def leftmostBuildingQueries(self, h: List[int], q: List[List[int]]) -> List[int]:
+        n = len(h) 
+        l = len(q)
+        ans = [-1] * l
+        sg = segtree(h)
+        sg.build_tree(1, 1, n)
+        for i, (a, b) in enumerate(q):
+            if a > b:
+                a, b = b, a
+            ax, bx = h[a], h[b]
+            if a == b or ax < bx:
+                ans[i] = b
+            else:
+                res = sg.query(1, 1, n, b + 2, ax)
+                if res > -inf:
+                    ans[i] = res - 1
+        return ans
