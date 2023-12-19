@@ -1,0 +1,42 @@
+"""
+组合计数，总是正难则反
+记忆化搜索降空间
+"""
+class Solution:
+    def stringCount(self, n: int) -> int:
+        mod = 10 ** 9 + 7
+        """
+        A：不含 l 25 ** n
+        B：不含 t 25 ** n
+        C：不含 e  25 ** n
+           只有一个 e n * 25 ** (n - 1)
+        A & B  24 ** n 
+        A & C 
+           不含 e  24 ** n
+           只有一个 e n * 24 ** (n - 1)
+        B & C
+           不含 e  24 ** n
+           只有一个 e n * 24 ** (n - 1)
+        A & B & C
+            不含 e  23 ** n
+            只有一个 e n * 23 ** (n - 1)
+        """
+        s = pow(26, n, mod) 
+        s1 = pow(25, n - 1, mod) * (75 + n)
+        s2 = pow(24, n - 1, mod) * (72 + 2 * n)
+        s3 = pow(23, n - 1, mod) * (23 + n)
+        return (s - s1 + s2 - s3 + mod) % mod
+
+class Solution:
+    def stringCount(self, n: int) -> int:
+        mod = 10 ** 9 + 7
+        @cache 
+        def dfs(i: int, l: int, t: int, e: int):
+            if i < 0:
+                return 1 if l == 0 and t == 0 and e == 0 else 0 
+            res = dfs(i - 1, 0, t, e) 
+            res += dfs(i - 1, l, 0, e) 
+            res += dfs(i - 1, l, t, max(e - 1, 0))
+            res += dfs(i - 1, l, t, e) * 23 
+            return res % mod 
+        return dfs(n - 1, 1, 1, 2) 
