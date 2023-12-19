@@ -1,0 +1,24 @@
+& 越来越小
+| 越来越大
+对于 x < y 
+    00 11 & | 都不变
+    01 10 操作相当于把一给另外一个数，给不给呢
+    (x - d) ** 2 + (y + d) ** 2 = x ** 2 + y ** 2 + 2d(y - x) + 4 * d ** 2
+    能给就给
+class Solution:
+    def maxSum(self, nums: List[int], k: int) -> int:
+        mod = 10 ** 9 + 7 
+        m = max(nums).bit_length() 
+        cnt = [0] * m 
+        for x in nums:
+            for i in range(m):
+                cnt[i] += (x >> i) & 1 
+        ans = 0
+        for i in range(k):
+            s = 0
+            for j in range(m):
+                if cnt[j]:
+                    cnt[j] -= 1 
+                    s |= (1 << j) 
+            ans = (ans + s * s) % mod 
+        return ans
