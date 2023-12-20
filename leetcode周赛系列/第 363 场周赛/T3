@@ -1,0 +1,21 @@
+"""
+二分模拟题，头痛
+"""
+class Solution:
+    def maxNumberOfAlloys(self, n: int, k: int, budget: int, com: List[List[int]], s: List[int], cost: List[int]) -> int:
+        left, right = 0, 2 * 10 ** 8 + 1
+        ans = 0
+        while left < right:
+            mid = (left + right) // 2
+            ss = inf
+            for f in com:
+                res = 0
+                for i, x in enumerate(f):
+                    res += max(mid * x - s[i], 0) * cost[i]
+                ss = min(ss, res)
+            if ss <= budget:
+                ans = mid 
+                left = mid + 1
+            else:
+                right = mid
+        return ans
