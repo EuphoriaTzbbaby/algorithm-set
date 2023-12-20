@@ -1,0 +1,49 @@
+"""
+有技巧的枚举
+树 拐弯
+"""
+prime = [True] * (10 ** 5 + 1)
+prime[1] = False
+nums = []
+for i in range(2, 10 ** 5 + 1):
+    if prime[i]:
+        nums.append(i)
+    for x in nums:
+        if i * x > 10 ** 5:
+            break 
+        prime[i * x] = False 
+        if i % x == 0:
+            break 
+class Solution:
+    def countPaths(self, n: int, edges: List[List[int]]) -> int:
+        g = [[] for _ in range(n + 1)]
+        for x, y in edges:
+            g[x].append(y)
+            g[y].append(x) 
+        def dfs(x: int, fa: int):
+            nodes.append(x) 
+            for y in g[x]:
+                if y != fa and not prime[y]:
+                    dfs(y, x)
+        cnt = [0] * (n + 1)
+        ans = 0
+        for i in range(1, n + 1):
+            if not prime[i]:
+                continue 
+            s = 0
+            for y in g[i]:
+                if prime[y]:
+                    continue 
+                if cnt[y] == 0:
+                    nodes = []
+                    dfs(y, i)
+                    for x in nodes:
+                        cnt[x] = len(nodes)
+                ans += cnt[y] * s 
+                s += cnt[y] 
+            ans += s 
+        return ans
+           
+                    
+                
+        
