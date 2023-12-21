@@ -1,0 +1,14 @@
+class Solution:
+    def minOperations(self, nums1: List[int], nums2: List[int]) -> int:
+        def f(last1, last2):
+            res = 0
+            for x, y in zip(nums1, nums2):
+                if x > last1 or y > last2:
+                    if y > last1 or x > last2:
+                        return inf
+                    res += 1
+            return res
+        res1 = f(nums1[-1], nums2[-1])
+        res2 = f(nums2[-1], nums1[-1])
+        res = min(res1, res2)
+        return res if res < inf else -1
