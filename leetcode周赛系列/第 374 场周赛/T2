@@ -1,0 +1,22 @@
+"""
+类区间合并
+"""
+class Solution:
+    def minimumAddedCoins(self, coins: List[int], target: int) -> int:
+        ans = 0
+        s = 1
+        # [0...s - 1]
+        # [x....x + s - 1]
+        # s - 1 >= target
+        coins.sort()
+        i = 0
+        s = 1
+        n = len(coins)
+        while s <= target:
+            if i < n and coins[i] <= s:
+                s = coins[i] + s
+                i += 1
+            else:
+                s += s 
+                ans += 1 
+        return ans
