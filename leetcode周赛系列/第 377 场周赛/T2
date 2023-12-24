@@ -1,0 +1,16 @@
+"""
+gg
+"""
+class Solution:
+    def maximizeSquareArea(self, m: int, n: int, h: List[int], v: List[int]) -> int:
+        h, v = [1] + sorted(h) + [m], [1] + sorted(v) + [n]
+        hs, vs = set(), set()
+        for i in range(len(h)):
+            for j in range(i):
+                hs.add(h[i] - h[j])
+        for i in range(len(v)):
+            for j in range(i):
+                vs.add(v[i] - v[j])
+        s = hs & vs
+        return pow(max(s), 2, 10 ** 9 + 7) if s else -1
+        
