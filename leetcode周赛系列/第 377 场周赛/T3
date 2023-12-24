@@ -1,0 +1,27 @@
+"""
+floyd  0 
+"""
+class Solution:
+    def minimumCost(self, s: str, t: str, o: List[str], c: List[str], cost: List[int]) -> int:
+        dis = [[inf] * 26 for _ in range(26)]
+        l = len(o)
+        for i in range(l):
+            x, y = o[i], c[i]
+            dis[ord(x) - 97][ord(y) - 97] = min(cost[i], dis[ord(x) - 97][ord(y) - 97])
+        for i in range(26):
+            dis[i][i] = 0
+        for k in range(26):
+            for i in range(26):
+                for j in range(26):
+                    dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j])
+        n = len(s)
+        ans = 0
+        for i in range(n):
+            c1, c2 = s[i], t[i]
+            cx1, cx2 = ord(s[i]) - 97, ord(t[i]) - 97
+            res = dis[cx1][cx2]
+            if res < inf:
+                ans += res
+            else:
+                return -1
+        return ans
