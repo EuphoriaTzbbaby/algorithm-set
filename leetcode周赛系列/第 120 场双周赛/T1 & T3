@@ -1,0 +1,24 @@
+"""
+三段式
+"""
+class Solution:
+    def incremovableSubarrayCount(self, nums: List[int]) -> int:
+        n = len(nums)
+        i, j = 1, n - 2
+        while i < n and nums[i] > nums[i - 1]:
+            i += 1
+        if i == n:
+            return n * (n + 1) // 2
+        while j and nums[j] < nums[j + 1]:
+            j -= 1
+        # [0....i] 单增
+        # [j + 1, n] 单增
+        # [0...i] 的 l
+        # [j + 1, n] 上有一个数 nums[id] 大于 nums[l]
+        # 至少删 [l + 1, id] id
+        ans = i + n - j - 1
+        x, y = nums[:i], nums[j + 1:]
+        for val in x:
+            id = bisect_left(y, val + 1)
+            ans += n - j - 1 - id
+        return ans + 1
