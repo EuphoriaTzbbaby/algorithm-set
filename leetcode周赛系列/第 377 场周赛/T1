@@ -1,0 +1,12 @@
+"""
+模拟即可
+"""
+class Solution:
+    def numberGame(self, nums: List[int]) -> List[int]:
+        nums.sort()
+        ans = []
+        i = 0
+        while i < len(nums):
+            ans.extend([nums[i + 1], nums[i]])
+            i += 2
+        return ans
