@@ -1,0 +1,89 @@
+***********************************************************************洛谷***********************************************************************************************
+# 洛谷 3373
+# 区间修改：加 & 和 
+class segtree:
+    def __init__(self, a, m: int):
+        self.mod = m
+        self.nums = a
+        self.n = len(a)
+        self.nums.insert(0, 0)
+        self.tree = [0] * (4 * self.n)
+        self.add = [0] * (4 * self.n)
+        self.mul = [1] * (4 * self.n)
+    def push_up(self, p: int):
+        self.tree[p] = (self.tree[p * 2] + self.tree[p * 2 + 1]) % self.mod
+    def build_tree(self, p: int, pl: int, pr: int):
+        if pl == pr:
+            self.tree[p] = self.nums[pl] % self.mod
+            return 
+        mid = (pl + pr) // 2
+        self.build_tree(p + p, pl, mid)
+        self.build_tree(p * 2 + 1, mid + 1, pr)
+        self.push_up(p)
+    def addtag1(self, p: int, pl: int, pr: int, c: int):
+        self.add[p] = (self.add[p] + c) % self.mod
+        self.tree[p] = (self.tree[p] + (pr - pl + 1) * c) % self.mod
+    def addtag2(self, p: int, pl: int, pr: int, c: int):
+        self.add[p] = (self.add[p] * c) % self.mod
+        self.mul[p] = (self.mul[p] * c) % self.mod
+        self.tree[p] = (self.tree[p] * c) % self.mod
+    def push_down(self, p: int, pl: int, pr: int):
+        self.push_down2(p, pl, pr)
+        self.push_down1(p, pl, pr)
+    def push_down1(self, p: int, pl: int, pr: int):
+        if self.add[p]:
+            mid = (pl + pr) // 2
+            self.addtag1(p + p, pl, mid, self.add[p])
+            self.addtag1(p + p + 1, mid + 1, pr, self.add[p])
+            self.add[p] = 0
+    def push_down2(self, p: int, pl: int, pr: int):
+        if self.mul[p] != 1:
+            mid = (pl + pr) // 2
+            self.addtag2(p + p, pl, mid, self.mul[p])
+            self.addtag2(p + p + 1, mid + 1, pr, self.mul[p])
+            self.mul[p] = 1
+    def update1(self, p: int, pl: int, pr: int, l: int, r: int, c: int):
+        if l <= pl and pr <= r:
+            self.addtag1(p, pl, pr, c)
+            return 
+        self.push_down(p, pl, pr)
+        mid = (pl + pr) // 2
+        if l <= mid:
+            self.update1(p + p, pl, mid, l, r, c)
+        if mid + 1 <= r:
+            self.update1(p + p + 1, mid + 1, pr, l, r, c)
+        self.push_up(p)
+    def update2(self, p: int, pl: int, pr: int, l: int, r: int, c: int):
+        if l <= pl and pr <= r:
+            self.addtag2(p, pl, pr, c)
+            return 
+        self.push_down(p, pl, pr)
+        mid = (pl + pr) // 2
+        if l <= mid:
+            self.update2(p + p, pl, mid, l, r, c)
+        if mid + 1 <= r:
+            self.update2(p + p + 1, mid + 1, pr, l, r, c)
+        self.push_up(p)
+    def query(self, p: int, pl: int, pr: int, l: int, r: int):
+        if l <= pl and pr <= r:
+            return self.tree[p]
+        self.push_down(p, pl, pr)
+        res = 0
+        mid = (pl + pr) // 2
+        if l <= mid:
+            res = (res + self.query(p + p, pl, mid, l, r)) % self.mod
+        if mid + 1 <= r:
+            res = (res + self.query(p + p + 1, mid + 1, pr, l, r)) % self.mod
+        return res 
+n, q, m = map(int, input().split())
+nums = list(map(int, input().split()))
+sg = segtree(nums, m)
+sg.build_tree(1, 1, n)
+for _ in range(q):
+    f = list(map(int, input().split()))
+    if f[0] == 1:
+        sg.update2(1, 1, n, f[1], f[2], f[3])
+    elif f[0] == 2:
+        sg.update1(1, 1, n, f[1], f[2], f[3])
+    else:
+        print(sg.query(1, 1, n, f[1], f[2]))
