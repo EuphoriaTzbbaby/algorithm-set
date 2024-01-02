@@ -1,0 +1,91 @@
+*******************************************************************************************************************************************************************************
+// 洛谷3379 纯板子
+#include<iostream>
+#include<unordered_map>
+#include<unordered_set>
+#include<math.h>
+#include<limits.h>
+#include<algorithm>
+#include<vector>
+#include<string.h>
+using namespace std;
+const int N = 5e5 + 9;
+typedef long long ll;
+ll n, m, s;
+ll depth[N];
+vector<ll>edges[N];
+ll pa[N][20];
+ll lg[N];
+void dfs(ll x, ll fa)
+{
+	depth[x] = depth[fa] + 1;
+	pa[x][0] = fa;
+	for (ll i = 1; i <= lg[depth[x]]; i += 1)
+	{
+		pa[x][i] = pa[pa[x][i - 1]][i - 1];
+	}
+	for (ll i = 0; i < edges[x].size(); i += 1)
+	{
+		ll y = edges[x][i];
+		if (y != fa)
+		{
+			dfs(y, x);
+		}
+	}
+}
+ll f_k(ll node, ll k)
+{
+	for (ll i = 19; i >= 0; i -= 1)
+	{
+		if ((k >> i) & 1)
+		{
+			node = pa[node][i];
+		}
+	}
+	return node;
+}
+ll lca(ll a, ll b)
+{
+	if (depth[a] > depth[b])
+	{
+		ll t = a;
+		a = b;
+		b = t;
+	}
+	b = f_k(b, depth[b] - depth[a]);
+	if (a == b)
+	{
+		return a;
+	}
+	for (ll i = 19; i >= 0; i -= 1)
+	{
+		ll px = pa[a][i];
+		ll py = pa[b][i];
+		if (px != py)
+		{
+			a = px;
+			b = py;
+		}
+	}
+	return pa[a][0];
+}
+int main()
+{
+	cin >> n >> m >> s;
+	for (int i = 1; i <= n; ++i) lg[i] = lg[i - 1] + (1 << lg[i - 1] == i);
+	for (int i = 0; i < n - 1; i += 1)
+	{
+		ll x, y;
+		cin >> x >> y;
+		edges[x].push_back(y);
+		edges[y].push_back(x);
+	}
+	dfs(s, 0);
+	for (int i = 0; i < m; i += 1)
+	{
+		ll a, b;
+		cin >> a >> b;
+		cout << lca(a, b) << endl;
+	}
+	return 0;
+}
