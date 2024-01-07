@@ -1,0 +1,44 @@
+"""
+记忆化 不是很明白
+"""
+class Solution:
+    def minimumOperationsToMakeEqual(self, x: int, y: int) -> int:
+        if x <= y:
+            return y - x
+        return min(x - y, self.minimumOperationsToMakeEqual(x // 11, y) + x % 11 + 1, self.minimumOperationsToMakeEqual(x // 11 + 1, y) + 11 - x % 11 + 1, self.minimumOperationsToMakeEqual(x // 5, y) + x % 5 + 1, self.minimumOperationsToMakeEqual(x // 5 + 1, y) + 5 - x % 5 + 1)
+"""
+bfs 求最短路
+"""
+class Solution:
+    def minimumOperationsToMakeEqual(self, x: int, y: int) -> int:
+        vis = set()
+        dis = defaultdict(int)
+        dis[x] = 0
+        q = deque()
+        q.append(x)
+        vis.add(x)
+        def add(x: int, last: int):
+            if x not in vis:
+                dis[x] = dis[last] + 1
+                vis.add(x)
+                q.append(x)
+        while True:
+            x = q.popleft()
+            if x + 1 not in vis:
+                dis[x + 1] = dis[x] + 1
+                vis.add(x + 1)
+                q.append(x + 1)
+            if x - 1 not in vis:
+                dis[x - 1] = dis[x] + 1
+                vis.add(x - 1)
+                q.append(x - 1)
+            if x % 5 == 0 and x // 5 not in vis:
+                dis[x // 5] = dis[x] + 1
+                vis.add(x // 5)
+                q.append(x // 5)
+            if x % 11 == 0 and x // 11 not in vis:
+                dis[x // 11] = dis[x] + 1
+                vis.add(x // 11)
+                q.append(x // 11)
+            if y in vis:
+                return dis[y]
