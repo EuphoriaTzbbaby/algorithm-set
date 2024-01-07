@@ -1,0 +1,7 @@
+# 从结果出发，解法就很明显了
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        for x in nums:
+            k ^= x
+        return k.bit_count()
+                
