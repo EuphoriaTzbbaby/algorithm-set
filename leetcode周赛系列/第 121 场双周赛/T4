@@ -1,0 +1,25 @@
+"""
+数位 dp 秒了
+"""
+class Solution:
+    def numberOfPowerfulInt(self, start: int, finish: int, limit: int, ss: str) -> int:
+        def f(s: str):
+            @cache
+            def dfs(i: int, cnt: int, is_limit: bool, lead: bool):
+                if i == len(s):
+                    return int(lead) and cnt == len(ss)
+                res = 0
+                if not lead:
+                    res = dfs(i + 1, cnt, False, False)
+                lo = 0 if lead else 1
+                up = int(s[i]) if is_limit else 9
+                for x in range(lo, min(up, limit) + 1):
+                    last = len(s) - i 
+                    if last > len(ss):
+                        res += dfs(i + 1, cnt, is_limit and x == up, True)
+                    else:
+                        if x == int(ss[len(ss) - last]):
+                            res += dfs(i + 1, cnt + 1, is_limit and x == up, True)
+                return res
+            return dfs(0, 0, True, False)
+        return f(str(finish)) - f(str(start - 1))
