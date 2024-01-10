@@ -1,0 +1,25 @@
+class Solution:
+    def specialPerm(self, nums: List[int]) -> int:
+        mod = 10 ** 9 + 7
+        n = len(nums)
+        @cache
+        def dfs(s: int, j: int):
+            if s == 0:
+                return 1
+            res = 0
+            for k, x in enumerate(nums):
+                if (s >> k) & 1 and (nums[j] % x == 0 or x % nums[j] == 0):
+                    res += dfs(s ^ (1 << k), k)
+            return res % mod
+        return sum(dfs(((1 << n) - 1) ^ (1 << j), j) for j in range(n)) % mod
+"""
+这个去重看不懂
+mp = defaultdict(int)
+for x in nums:
+    mp[x] += 1
+for key, val in mp.items():
+    while val >= 2:
+        res //= val 
+        val -= 1
+return res
+"""
