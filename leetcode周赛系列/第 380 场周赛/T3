@@ -1,0 +1,27 @@
+"""
+不好想的数位 dp
+最优解应该是位运算，头疼
+"""
+class Solution:
+    def findMaximumNumber(self, k: int, x: int) -> int:
+        def check(num: int):
+            @cache
+            def dfs(i: int, cnt1: int, is_limit: bool) -> int:
+                if i == 0:
+                    return cnt1
+                res = 0
+                up = num >> (i - 1) & 1 if is_limit else 1
+                for d in range(up + 1):  # 枚举要填入的数字 d
+                    res += dfs(i - 1, cnt1 + (d == 1 and i % x == 0), is_limit and d == up)
+                return res
+            return dfs(num.bit_length(), 0, True) <= k
+        left, right = 1, 10 ** 18 + 1
+        ans = 0
+        while left < right:
+            mid = (left + right) // 2
+            if check(mid):
+                ans = mid 
+                left = mid + 1
+            else:
+                right = mid 
+        return ans
