@@ -1,0 +1,28 @@
+class MidFinder:
+    def __init__(self):
+        self.diff = 0
+        self.la_H = []
+        self.lo_H = []
+    def addNum(self, num: int) -> None:
+        if self.diff == 0:
+            # la_H (3, 5) lo_H (8, 10)
+            if len(self.la_H) == 0 or num <= self.lo_H[0] - 1:
+                heappush(self.la_H, -num)
+            else:
+                x = heappop(self.lo_H)
+                heappush(self.la_H, -x)
+                heappush(self.lo_H, num)
+            self.diff += 1
+        else:
+            # la_H (3, 5)  lo_H (8)
+            if num <= -self.la_H[0] - 1:
+                x = -heappop(self.la_H)
+                heappush(self.lo_H, x)
+                heappush(self.la_H, -num)
+            else:
+                heappush(self.lo_H, num)
+            self.diff -= 1
+    def findMid(self) -> float:
+        if self.diff % 2:
+            return -self.la_H[0]
+        return (-self.la_H[0] + self.lo_H[0]) / 2
