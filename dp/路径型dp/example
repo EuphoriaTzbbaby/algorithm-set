@@ -57,3 +57,18 @@ class Solution:
                     res = min(res, dfs(i + 1, k) + tri[i][j])
             return res 
         return dfs(0, 0)
+
+931.下降路径最小和(比较直接)
+class Solution:
+    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+        n = len(matrix)
+        @cache 
+        def dfs(i: int, j: int):
+            if i == n - 1:
+                return matrix[i][j]
+            res = inf 
+            for k in range(j - 1, j + 2):
+                if 0 <= k < n:
+                    res = min(res, dfs(i + 1, k) + matrix[i][j])
+            return res 
+        return min(dfs(0, i) for i in range(n))
