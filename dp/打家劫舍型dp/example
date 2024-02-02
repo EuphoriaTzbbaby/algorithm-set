@@ -1,0 +1,34 @@
+*******************************************************************************leetcode*************************************************************************************
+
+198.打家劫舍(典型的选或不选)
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        @cache 
+        def dfs(i: int):
+            if i < 0:
+                return 0
+            return max(dfs(i - 1), dfs(i - 2) + nums[i])
+        return dfs(n - 1)
+
+740.删除并获得点数(考虑选某个数之后还能选什么数)
+class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        g = defaultdict(int)
+        # 相同的数可以无限选，不妨先记录每个数的出现次数
+        for x in nums:
+            g[x] += 1
+        f = [x for x in g.keys()]
+        # 选 x 就不能选 x - 1 和 x + 1 不妨将能选的数先排序再从后往前选就不用考虑比选的数大的了
+        f.sort()
+        n = len(f)
+        @cache
+        def dfs(i: int):
+            if i < 0:
+                return 0
+            if i == 0:
+                return f[0] * g[f[0]]
+            if f[i] == f[i - 1] + 1:
+                return max(dfs(i - 1), dfs(i - 2) + f[i] * g[f[i]])
+            return dfs(i - 1) + f[i] * g[f[i]]
+        return dfs(n - 1)
