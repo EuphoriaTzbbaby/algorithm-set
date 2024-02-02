@@ -41,3 +41,19 @@ class Solution:
                 return 1
             return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
+
+120.三角形最小路径和(比较直接)
+class Solution:
+    def minimumTotal(self, tri: List[List[int]]) -> int:
+        m = len(tri)
+        @cache 
+        def dfs(i: int, j: int):
+            if i == m - 1:
+                return tri[i][j]
+            res = inf 
+            for k in range(j, j + 2):
+                # 注意判断能不能转移
+                if k <= i + 1:
+                    res = min(res, dfs(i + 1, k) + tri[i][j])
+            return res 
+        return dfs(0, 0)
