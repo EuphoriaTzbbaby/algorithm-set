@@ -1,0 +1,19 @@
+********************************************************************************leetcode*************************************************************************************
+
+115.不同的子序列(比较简单)
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        mod = 10 ** 9 + 7
+        @cache
+        # i 表示当前匹配到 s 的第 i 个位置，j 表示当前匹配到 t 的第 j 个位置
+        def dfs(i: int, j: int):
+            # t 匹配成功了
+            if j < 0:
+                return 1
+            # 不合法，因为 s 已经匹配完了，t 还没有匹配完
+            if i < 0:
+                return 0
+            if s[i] != t[j]:
+                return dfs(i - 1, j) % mod 
+            return (dfs(i - 1, j - 1) + dfs(i - 1, j)) % mod 
+        return dfs(len(s) - 1, len(t) - 1)
