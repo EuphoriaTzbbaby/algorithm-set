@@ -1,6 +1,16 @@
 *********************************************************************************leetcode*********************************************************************************
 枚举选哪个
 
+300.最长递增子序列
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        f = [1] * n 
+        for i in range(n):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    f[i] = max(f[i], f[j] + 1)
+        return max(f)
 646.最长数对链
 class Solution:
     def findLongestChain(self, pairs: List[List[int]]) -> int:
