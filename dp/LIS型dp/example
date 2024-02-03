@@ -11,6 +11,54 @@ class Solution:
                 if nums[j] < nums[i]:
                     f[i] = max(f[i], f[j] + 1)
         return max(f)
+
+300.最长递增子序列(线段树做法，有点慢)
+class segtree:
+    def __init__(self, a):
+        self.nums = a 
+        self.n = len(a)
+        self.tree = [0] * (4 * self.n)
+    def push_up(self, p: int):
+        self.tree[p] = max(self.tree[p * 2], self.tree[p * 2 + 1])
+    def update(self, p: int, pl: int, pr: int, i: int, dis: int):
+        if pl == pr:
+            self.tree[p] = dis 
+            return 
+        mid = (pl + pr) // 2 
+        if i <= mid:
+            self.update(p * 2 , pl, mid, i, dis) 
+        else:
+            self.update(p * 2 + 1, mid + 1, pr, i, dis) 
+        self.push_up(p)
+    def query(self, p: int, pl: int, pr: int, l: int, r: int):
+        if l <= pl and pr <= r:
+            return self.tree[p] 
+        res = 0
+        mid = (pl + pr) // 2 
+        if l <= mid:
+            res = self.query(p * 2, pl, mid, l, r) 
+        if mid + 1 <= r:
+            res = max(res, self.query(p * 2 + 1, mid + 1, pr, l, r))
+        return res
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        f = sorted(nums) 
+        mp = defaultdict(int) 
+        for i, x in enumerate(f):
+            mp[x] = i + 1 
+        for i, x in enumerate(nums):
+            nums[i] = mp[x] 
+        sg = segtree(nums)
+        ans = 1
+        for x in nums:
+            if x == 1:
+                sg.update(1,1,n,1,1)
+            else:
+                res = 1 + sg.query(1, 1, n, 1, x-1)
+                sg.update(1, 1, n, x, res)
+        return sg.tree[1]
+
 646.最长数对链
 class Solution:
     def findLongestChain(self, pairs: List[List[int]]) -> int:
