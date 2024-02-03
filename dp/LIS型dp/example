@@ -1,4 +1,5 @@
 *********************************************************************************leetcode*********************************************************************************
+枚举选哪个
 
 646.最长数对链
 class Solution:
@@ -11,3 +12,18 @@ class Solution:
                 if pairs[j][1] < pairs[i][0]:
                     f[i] = max(f[i], f[j] + 1)
         return max(f)
+
+139.单词拆分(枚举当前子串结束位置)
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        vis = set(wordDict)
+        @cache 
+        def dfs(i: int):
+            if i < 0:
+                return True 
+            res = False
+            for j in range(i, -1, -1):
+                if s[j : i + 1] in vis:
+                    res = (res or dfs(j - 1))
+            return res 
+        return dfs(len(s) - 1)
