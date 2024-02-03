@@ -1,0 +1,21 @@
+****************************************************************************leetcode****************************************************************************************
+虽然是贪心的从最近的转移，不过从前往后会覆盖，自然就满足条件了，有更特殊的，看看字符串 dp
+
+
+1218. 最长定差子序列
+class Solution:
+    def longestSubsequence(self, arr: List[int], d: int) -> int:
+        g = defaultdict(int)
+        for x in arr:
+            g[x] = g[x - d] + 1
+        return max(g.values())
+
+1027. 最长等差数列
+class Solution:
+    def longestArithSeqLength(self, nums: List[int]) -> int:
+        def f(d: int):
+            g = defaultdict(int)
+            for x in nums:
+                g[x] = g[x - d] + 1
+            return max(g.values())
+        return max(f(d) for d in range(-500, 501))
