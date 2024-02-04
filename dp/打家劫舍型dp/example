@@ -33,6 +33,23 @@ class Solution:
             return dfs(i - 1) + f[i] * g[f[i]]
         return dfs(n - 1)
 
+2466.统计构造好字符串的方案数
+class Solution:
+    def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
+        f = (zero, one)
+        @cache
+        def dfs(i: int):
+            if i == 0:
+                return 1
+            if i < 0:
+                return 0
+            return dfs(i - f[0]) + dfs(i - f[1])
+        ans = 0
+        mod = 10 ** 9 + 7
+        for i in range(low, high + 1):
+            ans = (ans + dfs(i)) % mod
+        return ans
+
 309.买卖股票的最佳时机含冷冻期
 class Solution:
     def maxProfit(self, p: List[int]) -> int:
