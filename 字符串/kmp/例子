@@ -1,0 +1,23 @@
+def kmp(s: str, t: str):
+    m = len(t)
+    next = [0] * m
+    j = 0
+    for i in range(1, m):
+        v = t[i]
+        while j and t[j] != v:
+            j = next[j - 1]
+        if t[j] == v:
+            j += 1
+        next[i] = j
+    res = []
+    j = 0
+    for i, v in enumerate(s):
+        v = s[i]
+        while j and t[j] != v:
+            j = next[j - 1]
+        if t[j] == v:
+            j += 1
+        if j == len(t):
+            res.append(i - m + 1)
+            j = next[j - 1]
+    return res
