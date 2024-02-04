@@ -32,3 +32,20 @@ class Solution:
                 return max(dfs(i - 1), dfs(i - 2) + f[i] * g[f[i]])
             return dfs(i - 1) + f[i] * g[f[i]]
         return dfs(n - 1)
+
+309.买卖股票的最佳时机含冷冻期
+class Solution:
+    def maxProfit(self, p: List[int]) -> int:
+        n = len(p)
+        @cache 
+        def dfs(i: int, j: int):
+            if i >= n:
+                return 0
+            # j = 0 表示手里没有股票
+            if j == 0:
+                # 买 或 不买
+                return max(dfs(i + 1, 1) - p[i], dfs(i + 1, 0))
+            else:
+                # 卖 或 不卖
+                return max(dfs(i + 2, 0) + p[i], dfs(i + 1, 1))
+        return dfs(0, 0)
