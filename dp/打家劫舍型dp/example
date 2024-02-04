@@ -104,3 +104,16 @@ class Solution:
             p, b = q[i]
             return max(dfs(i + b + 1) + p, dfs(i + 1))
         return dfs(0)
+
+322.零钱兑换
+class Solution:
+    def coinChange(self, coins: List[int], c: int) -> int:
+        @cache
+        def dfs(i: int, c: int):
+            if i < 0:
+                return 0 if c == 0 else inf 
+            if c < coins[i]:
+                return dfs(i - 1, c)
+            return min(dfs(i - 1, c), dfs(i, c - coins[i]) + 1)
+        res = dfs(len(coins) - 1, c)
+        return -1 if res == inf else res
