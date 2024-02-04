@@ -46,9 +46,22 @@ class Solution:
                 return dfs(i - 1, j - 1)
             return min(dfs(i, j - 1) + ord(t[j]), dfs(i - 1, j) + ord(s[i]))
         return dfs(m - 1, n - 1)
-1143.最长公共子序列
+1143.最长公共子序列(比较简单)
 class Solution:
     def longestCommonSubsequence(self, s1: str, s2: str) -> int:
+        @cache
+        def dfs(i: int, j: int):
+            if i < 0:
+                return 0
+            if j < 0:
+                return 0
+            if s1[i] != s2[j]:
+                return max(dfs(i, j - 1), dfs(i - 1, j))
+            return dfs(i - 1, j - 1) + 1
+        return dfs(len(s1) - 1, len(s2) - 1)
+1035.不相交的线(1143 换了个题面)
+class Solution:
+    def maxUncrossedLines(self, s1: List[int], s2: List[int]) -> int:
         @cache
         def dfs(i: int, j: int):
             if i < 0:
