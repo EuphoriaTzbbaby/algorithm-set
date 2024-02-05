@@ -1,0 +1,48 @@
+*****************************************************************************leetcodre*************************************************************************************
+关键词：从前 k 个
+
+1696.跳跃游戏VI 
+class Solution:
+    def maxResult(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        f = [-inf] * n
+        f[0] = nums[0]
+        q = deque()
+        q.append(0)
+        for i in range(1, n):
+            x = nums[i]
+            # 转移必须要从 0 开始
+            f[i] = f[q[0]] + x
+            # 去尾
+            while q and f[i] >= f[q[-1]]:
+                q.pop()
+            # 入队
+            q.append(i)
+            # 此时队列内元素是单调非递增的
+            # 删头，直到下个状态可以转移
+            while i + 1 - q[0] > k:
+                q.popleft()
+        # print(f)
+        return f[-1]
+
+1425.带限制的子序列和
+class Solution:
+    def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        f = [-inf] * n
+        f[0] = nums[0]
+        q = deque()
+        q.append(0)
+        for i in range(1, n):
+            x = nums[i]
+            f[i] = max(x, f[q[0]] + x)
+            # 去尾
+            while q and f[i] >= f[q[-1]]:
+                q.pop()
+            # 入队
+            q.append(i)
+            # 此时队列内元素是单调非递增的
+            # 删头
+            while i + 1 - q[0] > k:
+                q.popleft()
+        return max(f)
