@@ -95,3 +95,45 @@ class Solution:
                 return 1 if c == 0 else 0
             return sum(dfs(c - x) for x in nums)
         return dfs(target)
+
+474.一和零
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        l = len(strs)
+        # cnt = [0] * l
+        # for i, x in enumerate(strs):
+        #     cnt[i] = x.count("0")
+        # @cache
+        # #0/1背包 容积有两个:
+        # def dfs(i: int, x: int, y: int) -> int:
+        #     #boundary
+        #     if i < 0:
+        #         return -inf if (x < 0 or y < 0) else 0
+        #     #val_return:
+        #     #where
+        #     s = strs[i]
+        #     cnt1 = cnt[i]
+        #     cnt2 = len(s) - cnt1
+        #     if x - cnt1 < 0 and y - cnt2 < 0:
+        #         return dfs(i - 1, x, y)
+        #     return max(dfs(i - 1, x, y), dfs(i - 1, x - cnt1, y - cnt2) + 1)
+        #entrance
+        # return dfs(l - 1, m, n)
+        cnt = [0] * l
+        for i, x in enumerate(strs):
+            cnt[i] = x.count("0")
+        f = [[[-inf] * (n + 109) for _ in range(m + 109)] for _ in range(l + 1)]
+        for j in range(m + 1):
+            for k in range(n + 1):
+                f[0][j][k] = 0
+        for i in range(l):
+            for x in range(m + 1):
+                for y in range(n + 1):
+                    s = strs[i]
+                    cnt1 = cnt[i]
+                    cnt2 = len(s) - cnt1
+                    if x - cnt1 < 0 and y - cnt2 < 0:
+                        f[i + 1][x][y] = f[i][x][y]
+                    else:
+                        f[i + 1][x][y] = max(f[i][x][y], f[i][x - cnt1][y - cnt2] + 1)
+        return f[l][m][n]
