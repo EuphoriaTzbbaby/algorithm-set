@@ -85,3 +85,13 @@ class Solution:
                     res = (res or dfs(j - 1))
             return res 
         return dfs(len(s) - 1)
+
+377.组合总数IV
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        @cache 
+        def dfs(c: int):
+            if c <= 0:
+                return 1 if c == 0 else 0
+            return sum(dfs(c - x) for x in nums)
+        return dfs(target)
