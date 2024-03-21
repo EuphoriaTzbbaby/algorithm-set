@@ -1,0 +1,31 @@
+n, q = map(int, input().split())
+nums = []
+for _ in range(n):
+    x = int(input())
+    nums.append(x)
+LOG = [0] * (n + 1)
+for i in range(2, n + 1):
+    LOG[i] = LOG[i // 2] + 1
+inf = 10 ** 18
+p = LOG[n]
+st_max = [[-inf] * (p + 1) for _ in range(n)]
+st_min = [[inf] * (p + 1) for _ in range(n)]
+for i in range(n):
+    st_max[i][0] = st_min[i][0] = nums[i]
+k = 1
+while k <= p:
+    for i in range(n):
+        if i + (1 << (k - 1)) < n:
+            st_max[i][k] = max(st_max[i][k - 1], st_max[i + (1 << (k - 1))][k - 1])
+            st_min[i][k] = min(st_min[i][k - 1], st_min[i + (1 << (k - 1))][k - 1])
+        else:
+            st_max[i][k] = st_max[i][k - 1]
+            st_min[i][k] = st_min[i][k - 1]
+    k += 1
+for _ in range(q):
+    l, r = map(int, input().split())
+    l, r = l - 1, r - 1
+    p = LOG[r - l + 1]
+    mx = max(st_max[l][p], st_max[r - (1 << p) + 1][p])
+    mn = min(st_min[l][p], st_min[r - (1 << p) + 1][p])
+    print(mx - mn)
