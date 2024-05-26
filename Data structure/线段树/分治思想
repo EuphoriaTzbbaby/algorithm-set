@@ -1,0 +1,60 @@
+n, m = map(int, input().split())
+nums = [0] + list(map(int, input().split()))
+curSum = [0] * ((n + 1) * 4)
+lSum = [0] * ((n + 1) * 4)
+rSum = [0] * ((n + 1) * 4)
+mxSum = [0] * ((n + 1) * 4)
+inf = 10 ** 18
+def push_up(p: int):
+    curSum[p] = curSum[p + p] + curSum[p + p + 1]
+    lSum[p] = max(lSum[p + p], curSum[p + p] + lSum[p + p + 1])
+    rSum[p] = max(rSum[p + p + 1], curSum[p + p + 1] + rSum[p + p])
+    mxSum[p] = max(mxSum[p + p], max(mxSum[p + p + 1], rSum[p + p] + lSum[p + p + 1]))
+def build_tree(p: int, pl: int, pr: int):
+    if pl == pr:
+        curSum[p] = lSum[p] = rSum[p] = mxSum[p] = nums[pl]
+        return 
+    mid = (pl + pr) // 2
+    build_tree(p + p, pl, mid)
+    build_tree(p + p + 1, mid + 1, pr)
+    push_up(p)
+def query(p: int, pl: int, pr: int, l: int, r: int):
+    if l <= pl and pr <= r:
+        return curSum[p], lSum[p], rSum[p], mxSum[p]
+    mid = (pl + pr) // 2
+    lSon = [-inf, -inf, -inf, -inf]
+    rSon = [-inf, -inf, -inf, -inf]
+    # 与区间[pl, mid] 有交集
+    if l <= mid:
+        lSon = query(p + p, pl, mid, l, r)
+    # 与区间[mid + 1, pr] 有交集
+    if mid + 1 <= r:
+        rSon = query(p + p + 1, mid + 1, pr, l, r)
+    if lSon[0] == -inf:
+        lSon[0] = 0
+    if rSon[0] == -inf:
+        rSon[0] = 0
+    curSu = lSon[0] + rSon[0]
+    lSu = max(lSon[1], lSon[0] + rSon[1])
+    rSu = max(rSon[2], rSon[0] + lSon[2])
+    mxSu = max(lSon[-1], max(rSon[-1], lSon[2] + rSon[1]))
+    return curSu, lSu, rSu, mxSu
+def update(p: int, pl: int, pr: int, id: int, x: int):
+    if pl == pr:
+        curSum[p] = lSum[p] = rSum[p] = mxSum[p] = x
+        return 
+    mid = (pl + pr) // 2
+    if id <= mid:
+        update(p + p, pl, mid, id, x)
+    else:
+        update(p + p + 1, mid + 1, pr, id, x)
+    push_up(p)
+build_tree(1, 1, n)
+for _ in range(m):
+    k, x, y = map(int, input().split())
+    if k == 1:
+        if x > y:
+            x, y = y, x 
+        print(query(1, 1, n, x, y)[-1])
+    else:
+        update(1, 1, n, x, y)
