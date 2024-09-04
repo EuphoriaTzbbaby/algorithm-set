@@ -1,0 +1,83 @@
+class fk:
+    def __init__(self, nums):
+        n = len(nums) 
+        nums = [0] + nums 
+        b = int(sqrt(n))
+        t = n // b 
+        if n % b:
+            t += 1
+
+        # 每一块的左右端点
+        st, ed = [0] * (t + 1), [0] * (t + 1)
+        for i in range(1, t + 1):
+            st[i] = (i - 1) * b + 1
+            ed[i] = i * b 
+        ed[t] = n 
+
+        # 每一块的和
+        s = [0] * (t + 1)
+        for i in range(1, t + 1):
+            for j in range(st[i], ed[i] + 1):
+                s[i] += nums[j] 
+
+        # 位于哪一块
+        pos = [0] * (n + 1)
+        for i in range(1, n + 1):
+            pos[i] = (i + b - 1) // b
+
+        self.n = n 
+        self.st = st 
+        self.ed = ed 
+        self.b = b 
+        self.t = t 
+        self.s = s 
+        self.pos = pos 
+        self.tag = [0] * (t + 1)
+        self.nums = nums 
+        
+    def update(self, l : int, r: int, k: int):
+        pos = self.pos 
+        nums = self.nums 
+        s = self.s 
+        tag = self.tag 
+        st = self.st 
+        ed = self.ed 
+
+        pl, pr = pos[l], pos[r]
+        # 同一块
+        if pl == pr:
+            for i in range(l, r + 1):
+                nums[i] += k 
+                s[pl] += k 
+        else:
+            for i in range(pl + 1, pr):
+                tag[i] += k 
+            for i in range(l, ed[pl] + 1):
+                nums[i] += k 
+                s[pl] += k 
+            for i in range(st[pr], r + 1):
+                nums[i] += k
+                s[pr] += k 
+    def query(self,l: int, r: int):
+        pos = self.pos 
+        nums = self.nums 
+        s = self.s 
+        tag = self.tag 
+        st = self.st 
+        ed = self.ed 
+
+        pl, pr = pos[l], pos[r]
+        pl, pr = pos[l], pos[r]
+        res = 0 
+        if pl == pr:
+            for i in range(l, r + 1):
+                res += nums[i] + tag[pl]
+        else:
+            res = 0 
+            for i in range(pl + 1, pr):
+                res += tag[i] * (ed[i] - st[i] + 1) + s[i]
+            for i in range(l, ed[pl] + 1):
+                res += nums[i] + tag[pl]
+            for i in range(st[pr], r + 1):
+                res += nums[i] + tag[pr]
+        return res 
