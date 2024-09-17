@@ -1,0 +1,48 @@
+n = len(s) 
+s = "*" + s 
+m = 128
+rk = [0] * 2 * n 
+oldrk = [0] * (n + 9)
+sa = [0] * 2 * n 
+id = [0] * (n + 9)
+cnt = [0] * (m + 1)
+for i in range(1, n + 1):
+    rk[i] = ord(s[i])
+    cnt[rk[i]] += 1
+for i in range(1, m + 1):
+    cnt[i] += cnt[i - 1]
+for i in range(n, 0, -1):
+    sa[cnt[rk[i]]] = i 
+    cnt[rk[i]] -= 1 
+k = 1
+while True:
+    cur = 0 
+    for i in range(n - k + 1, n + 1):
+        id[cur + 1] = i 
+        cur += 1 
+    for i in range(1, n + 1):
+        if sa[i] > k:
+            id[cur + 1] = sa[i] - k
+            cur += 1 
+    cnt = [0] * (m + 1)
+    for i in range(1, n + 1):
+        cnt[rk[i]] += 1
+    for i in range(1, m + 1):
+        cnt[i] += cnt[i - 1]
+    for i in range(n, 0, -1):
+        sa[cnt[rk[id[i]]]] = id[i]
+        cnt[rk[id[i]]] -= 1 
+    p = 0 
+    for i in range(1, n + 1):
+        oldrk[i] = rk[i] 
+    for i in range(1, n + 1):
+        if oldrk[sa[i]] == oldrk[sa[i - 1]] and oldrk[sa[i] + k] == oldrk[sa[i - 1] + k]:
+            rk[sa[i]] = p 
+        else:
+            rk[sa[i]] = p + 1
+            p += 1
+    if p == n:
+        break 
+    m = p 
+    k *= 2
+return s[sa[n] : ]
