@@ -45,4 +45,14 @@ while True:
         break 
     m = p 
     k *= 2
-return s[sa[n] : ]
+h = [0] * 2 * n 
+k = 0 
+for i in range(1, n + 1):
+    if rk[i] == 0:
+        continue 
+    if k:
+        k -= 1
+    while s[i + k] == s[sa[rk[i] - 1] + k:
+        k += 1
+    h[rk[i]] = k 
+
