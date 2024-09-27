@@ -1,7 +1,25 @@
-bkdrHash = [0] * (n + 1)
-mod = 1111111111111111111
-for i in range(n):
-    bkdrHash[i + 1] = (bkdrHash[i] * 131 + ord(s[i]) - 97 + 1) % mod 
-g = [1] * n
-for i in range(1, n):
-    g[i] = g[i - 1] * 131 % mod 
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+ll rnd(ll x, ll y) {
+    return uniform_int_distribution<ll>(x, y)(rng);
+}
+
+ll MOD = 1e18 + rnd(0, 1e9), BASE = 233 + rnd(0, 1e3);
+
+struct HashString {
+    vector<ll> P, H;
+
+    HashString(string &s) {
+        ll n = s.size();
+        P.resize(n + 1);
+        P[0] = 1;
+        for (ll i = 1; i <= n; i++) P[i] = P[i - 1] * BASE % MOD;
+        H.resize(n + 1);
+        H[0] = 0;
+        for (ll i = 1; i <= n; i++) H[i] = (H[i - 1] * BASE + s[i - 1]) % MOD;
+    }
+
+    ll query(ll l, ll r) {
+        return (H[r] - H[l - 1] * P[r - l + 1] % MOD + MOD) % MOD;
+    }
+};
