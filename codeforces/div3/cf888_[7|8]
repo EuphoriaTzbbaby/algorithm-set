@@ -1,0 +1,19 @@
+E: 很怪的一题，dfs
+  
+F: 还是分位考虑，爽了，一个数组中两个数同或最小值一定在排序后相邻
+ll v = 0;
+ll a = nums[i]; 
+ll b = nums[i + 1];
+ll x = 0;
+fw(j, 0, k) {
+    ll bita = a >> j & 1;
+    ll bitb = b >> j & 1;
+    if(bita ^ bitb) {
+        x += (1 << j);
+    } else {
+        v += (1 << j);
+        if(bita == 0) {
+            x += (1 << j);
+        }
+    }
+}
