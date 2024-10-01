@@ -1,0 +1,26 @@
+F: 一元二次方程？
+ll ans = 0;
+ll b, c;
+cin >> b >> c;
+b *= (-1);
+// cout << b << " " << c << " " << b * b - c << endl;
+if(b * b < 4 * c) {
+    cout << 0 << " ";
+    continue;
+}
+ll dis = b * b - 4 * c;
+ll g = (int) sqrt(dis);
+if(g * g != dis) {
+    cout << 0 << " ";
+    continue;
+}
+if((-b + g) % 2 || (-b - g) % 2) {
+    cout << 0 << " ";
+    continue;
+}
+ll x1 = (-b + g) / 2;
+ll x2 = (-b - g) / 2;
+// cout << x1 << " " << x2 << endl;
+if(x1 != x2) ans += mp[x1] * mp[x2];
+else ans += mp[x1] * (mp[x1] - 1) / 2;
+cout << ans << " ";
