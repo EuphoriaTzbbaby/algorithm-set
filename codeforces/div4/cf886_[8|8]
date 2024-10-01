@@ -1,1 +1,29 @@
 H: 带权并查集，dh 表示到根节点的距离，关键公式 dh[fax] = dh[y] - dh[x] + w ( 四个点就可以看懂了)
+ll n, m;
+cin >> n >> m;
+vector<ll> s(n + 1);
+vector<ll> dh(n + 1);
+fw(i, 1, n + 1) s[i] = i;
+auto find = [&] (auto &&find, ll x) -> ll {
+    if(x != s[x]) {
+        ll t = s[x];
+        s[x] = find(find, s[x]);
+        dh[x] += dh[t];
+    }
+    return s[x];
+};
+ll ok = 1;
+auto merge = [&] (ll x, ll y, ll w) -> void {
+    ll fax = find(find, x), fay = find(find, y);
+    if(fax != fay) {
+        s[fax] = fay;
+        dh[fax] = dh[y] - dh[x] + w;
+    } else {
+        if(dh[x] != dh[y] + w) ok = 0;
+    }
+};
+fw(i, 0, m) {
+    ll a, b, w;
+    cin >> a >> b >> w;
+    merge(a, b, w);
+}
