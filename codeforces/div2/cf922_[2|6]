@@ -1,0 +1,36 @@
+C: 很有意思的位运算
+ll a, b, r;
+cin >> a >> b >> r;
+if(a == b) {
+    cout << 0 << endl;
+    return;
+}
+if(a < b) {
+    ll t = a;
+    a = b;
+    b = t;
+}
+if(r == 0) {
+    ll ans = a - b;
+    cout << ans << endl;
+    return;
+}
+ll x = 0;
+ll ok = 1;
+for(ll j = 60; j >= 0; j -= 1) {
+    ll bit1 = a >> j & 1;
+    ll bit2 = b >> j & 1;
+    if(bit1 ^ bit2 == 1) {
+        if(ok == 1) {
+            ok = 0;
+            continue;
+        }
+        if(bit1 == 1) {
+            if(x + (1ll << j) <= r) {
+                x += (1ll << j);
+            }
+        }
+    }
+}
+ll ans = (a ^ x) - (b ^ x);
+cout << ans << endl;
