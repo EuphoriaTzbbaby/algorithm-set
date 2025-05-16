@@ -1,0 +1,32 @@
+{
+	"Dsu Class": {
+		"scope": "cpp",
+		"prefix": "dsu",
+		"body": [
+			"class Dsu {",
+			"public:",
+			"\tint n;",
+			"\tvector<ll> s;",
+			"\tDsu(int n) {",
+			"\t\tthis -> n = n;",
+			"\t\ts.resize(n + 1);",
+			"\t\tfw(i, 0, n + 1) s[i] = i;",
+			"\t}",
+			"\tll find(ll x) {",
+			"\t\tif(x != s[x]) {",
+			"\t\t\ts[x] = find(s[x]);",
+			"\t\t}",
+			"\t\treturn s[x];",
+			"\t}",
+			"\tbool same(ll x, ll y) {",
+			"\t\treturn find(x) == find(y);",
+			"\t}",
+			"\tvoid merge(ll x, ll y) {",
+			"\t\tll fax = find(x), fay = find(y);",
+			"\t\ts[fax] = fay;",
+			"\t}",
+			"};"
+		],
+		"description": "快速生成Dsu类"
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"Complete C++ Template": {
+		"scope": "cpp",
+		"prefix": "cwwdka",
+		"body": [
+			"#include <bits/stdc++.h>",
+			"using namespace std;",
+			"typedef long long ll;",
+			"void solve() {",
+			"    ",
+			"}",
+			"int main() {",
+			"\tios::sync_with_stdio(0);",
+			"\tcin.tie(0);",
+			"\tcout.tie(0);",
+			"\tint t;",
+			"\tcin >> t;",
+			"\twhile (t--) {",
+			"\t\tsolve();",
+			"\t}",
+			"\treturn 0;",
+			"}"
+		],
+		"description": "完整的C++代码模板"
+	}
+}

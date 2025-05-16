@@ -1,0 +1,37 @@
+{
+	"Node and Functional Methods": {
+		"scope": "cpp",
+		"prefix": "kdl",
+		"body": [
+			"struct node {",
+			"\tll l, r;",
+			"\tmutable ll v;",
+			"\tnode(ll L, ll R, ll V) {",
+			"\t\tl = L, r = R, v = V;",
+			"\t}",
+			"\tbool operator < (const node& o) const {",
+			"\t\treturn l < o.l;",
+			"\t}",
+			"};",
+			"set<node> s;",
+			"set<node>::iterator split(ll x) {",
+			"\tauto it = s.lower_bound(node(x, 0, 0));",
+			"\tif(it != s.end() && it -> l == x) {",
+			"\t\treturn it;",
+			"\t}",
+			"\tit--;",
+			"\tll l = it -> l, r = it -> r, v = it -> v;",
+			"\ts.erase(it);",
+			"\ts.insert(node(l, x - 1, v));",
+			"\treturn s.insert(node(x, r, v)).first;",
+			"}",
+			"void tp(ll l, ll r, ll v) {",
+			"\tauto itr = split(r + 1);",
+			"\tauto itl = split(l);",
+			"\ts.erase(itl, itr);",
+			"\ts.insert(node(l, r, v));",
+			"}"
+		],
+		"description": "快速生成node结构体和split、tp函数"
+	}
+}

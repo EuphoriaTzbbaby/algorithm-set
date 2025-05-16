@@ -1,0 +1,22 @@
+{
+	"Complete C++ Template": {
+		"scope": "python",
+		"prefix": "tzb",
+		"body": [
+			"from math import *",
+			"from collections import *",
+			"from bisect import *",
+			"import sys",
+			"input = sys.stdin.readline",
+			"def gn():",
+			"    return map(int, input().split())",
+			"def gl():",
+			"    return list(map(int, input().split()))",
+			"def solve():",
+			"    ",
+			"for _ in range(int(input())):",
+			"    solve()"
+		],
+		"description": "完整的C++代码模板"
+	}
+}
